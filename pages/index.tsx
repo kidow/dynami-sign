@@ -3,6 +3,7 @@ import Head from 'next/head'
 interface State {
   title: string
   description: string
+  date: string
 }
 
 const baseURL =
@@ -11,7 +12,7 @@ const baseURL =
     : 'https://dynamisign.com'
 const title = 'DynamiSign'
 const description = 'Dynamic open graph image maker'
-const image = `${baseURL}/api/sign`
+const image = `${baseURL}/sign`
 
 const HomePage = () => {
   return (

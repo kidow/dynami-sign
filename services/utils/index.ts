@@ -46,23 +46,38 @@ export const getScreenshot = async (html: string) => {
 
 export const getHtml = () => {
   return `<!DOCTYPE html>
-    <html>
-        <meta charset="utf-8">
-        <title>Generated Image</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-        </style>
-        <body>
-            <div>
-                <div class="spacer">
-                <div class="logo-wrapper">
-                    Logo Wrapper
-                </div>
-                <div class="spacer">
-                <div class="heading">
-                    Heading
-                </div>
-            </div>
-        </body>
-    </html>`
+  <html>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      html {
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+          Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+      }
+      .container {
+        padding: 4rem;
+      }
+      .title {
+        font-size: 4rem;
+        font-weight: bold;
+        color: #2f363d;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+      }
+      .description {
+        font-size: 2rem;
+        color: #6e7681;
+      }
+    </style>
+    <body>
+      <div class="container">
+        <div class="title">WSL2 Failed to complete request socket hang up</div>
+        <div class="description">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate
+          recusandae nihil optio incidu...
+        </div>
+      </div>
+    </body>
+  </html>
+  `
 }

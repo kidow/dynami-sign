@@ -9,6 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   //   res.end('<h1>Not Found</h1>')
   //   return
   // }
+  const { title, description } = req.query
   try {
     const html = getHtml()
     const file = await getScreenshot(html)

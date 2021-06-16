@@ -42,7 +42,7 @@ export default class MyDocument extends Document {
           <link rel="manifest" href="/site.webmanifest" />
           <meta name="msapplication-TileColor" content="#030cf0" />
         </Head>
-        <body className="bg-gray-900">
+        <body className="bg-gray-100">
           <Main />
           <NextScript />
         </body>
