@@ -3,3 +3,8 @@ export interface ChromeOptions {
   executablePath: string
   headless: boolean
 }
+
+export interface Metapo {
+  title: string
+  description: string
+}

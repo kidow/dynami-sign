@@ -1,39 +1,42 @@
-import Head from 'next/head'
+import { useObject, baseURL } from 'services'
+import { ReInput, ReSEO } from 'components'
+import { Metapo } from 'types'
 
-interface State {
-  title: string
-  description: string
+interface State extends Metapo {
   date: string
+  thumbnail: string
 }
 
-const baseURL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'https://dynamisign.com'
-const title = 'DynamiSign'
-const description = 'Dynamic open graph image maker'
-const image = `${baseURL}/sign`
-
 const HomePage = () => {
+  const [{ title, description, date, thumbnail }, setState, onChange] =
+    useObject<State>({
+      title: 'WSL2 Failed to complete request socket hang up',
+      description:
+        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate recusandae nihil optio incidu...',
+      date: '',
+      thumbnail: ''
+    })
   return (
     <>
-      <Head>
-        <title>DynamiSign</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={baseURL} />
-        <meta property="og:image" content={image} />
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={image} />
-        <meta property="twitter:domain" content={baseURL} />
-      </Head>
-
+      <ReSEO />
       <div className="container mx-auto">
         <div>Dynami Sign</div>
         <div>
-          <img src={image} />
+          <img src={`${baseURL}/sign`} />
+        </div>
+        <div>
+          <ReInput
+            value={title}
+            name="title"
+            label="타이틀"
+            onChange={onChange}
+          />
+          <ReInput
+            value={description}
+            name="description"
+            label="설명"
+            onChange={onChange}
+          />
         </div>
       </div>
     </>

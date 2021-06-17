@@ -13,6 +13,7 @@
     "next": "10.x",
     "puppeteer-core": "^10.0.0",
     "react": "17.x",
+    "react-debounce-input": "^3.2.3",
     "react-dom": "17.x"
   },
   "devDependencies": {

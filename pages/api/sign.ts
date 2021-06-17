@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getHtml, getScreenshot } from 'services'
+import { getHtml, getScreenshot } from 'utils'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   console.log('req.url', req.url)
@@ -9,7 +9,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   //   res.end('<h1>Not Found</h1>')
   //   return
   // }
-  const { title, description } = req.query
+  const title = req.query.title || 'Dynamic Sign'
+  const description = req.query.description || 'Dynamic open graph image maker'
   try {
     const html = getHtml()
     const file = await getScreenshot(html)
