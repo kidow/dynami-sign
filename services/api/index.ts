@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { baseURL } from 'services'
+import { Params } from 'types'
 
 const api = axios.create({
   baseURL,
@@ -10,4 +11,4 @@ const api = axios.create({
 })
 api.interceptors.response.use(({ data }) => data)
 
-export const getSign = () => api.get('/api/sign')
+export const getSign = (params: Params) => api.get('/api/sign', { params })

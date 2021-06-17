@@ -1,6 +1,6 @@
 import core from 'puppeteer-core'
 import chrome from 'chrome-aws-lambda'
-import { ChromeOptions } from 'types'
+import { ChromeOptions, Params } from 'types'
 
 let _page: core.Page | null
 export const isDev = process.env.NODE_ENV === 'development'
@@ -44,7 +44,13 @@ export const getScreenshot = async (html: string) => {
   return file
 }
 
-export const getHtml = () => {
+export const getHtml = (props?: Params) => {
+  const title = props
+    ? props.title
+    : 'WSL2 Failed to complete request socket hang up'
+  const description = props
+    ? props.description
+    : 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate recusandae nihil optio incidu...'
   return `<!DOCTYPE html>
   <html>
     <meta charset="utf-8" />
@@ -71,10 +77,9 @@ export const getHtml = () => {
     </style>
     <body>
       <div class="container">
-        <div class="title">WSL2 Failed to complete request socket hang up</div>
+        <div class="title">${title}</div>
         <div class="description">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate
-          recusandae nihil optio incidu...
+          ${description}
         </div>
       </div>
     </body>

@@ -4,7 +4,7 @@ export interface ChromeOptions {
   headless: boolean
 }
 
-export interface Metapo {
+export interface Params {
   title: string
   description: string
 }

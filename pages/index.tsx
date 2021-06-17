@@ -1,41 +1,46 @@
 import { useObject, baseURL } from 'services'
-import { ReInput, ReSEO } from 'components'
-import { Metapo } from 'types'
+import { ReSEO, ReDebounceInput } from 'components'
+import { Params } from 'types'
+import queryString from 'query-string'
 
-interface State extends Metapo {
+interface State extends Params {
   date: string
   thumbnail: string
 }
 
 const HomePage = () => {
-  const [{ title, description, date, thumbnail }, setState, onChange] =
-    useObject<State>({
-      title: 'WSL2 Failed to complete request socket hang up',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate recusandae nihil optio incidu...',
-      date: '',
-      thumbnail: ''
-    })
+  const [{ title, description, date, thumbnail }, setState] = useObject<State>({
+    title: 'Dynamic Sign',
+    description: 'Dynamic open graph image maker',
+    date: '',
+    thumbnail: `${baseURL}/api/sign`
+  })
+  const onChange = (value: string, name: string) => {
+    const url = new URL(thumbnail).search
+    const query = queryString.parse(url)
+    query[name] = value
+    const newURL = queryString.stringify(query, { encode: false })
+    setState({ thumbnail: baseURL + '/api/sign?' + newURL })
+  }
   return (
     <>
       <ReSEO />
-      <div className="container mx-auto">
-        <div>Dynami Sign</div>
+      <div className="container mx-auto my-4">
         <div>
-          <img src={`${baseURL}/sign`} />
+          <img src={thumbnail} />
         </div>
         <div>
-          <ReInput
+          <ReDebounceInput
             value={title}
             name="title"
             label="타이틀"
-            onChange={onChange}
+            onChange={(value) => onChange(value, 'title')}
           />
-          <ReInput
+          <ReDebounceInput
             value={description}
             name="description"
             label="설명"
-            onChange={onChange}
+            onChange={(value) => onChange(value, 'description')}
           />
         </div>
       </div>
