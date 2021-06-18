@@ -15,13 +15,16 @@
     "puppeteer-core": "^10.0.0",
     "query-string": "^7.0.0",
     "react": "17.x",
+    "react-copy-to-clipboard": "^5.0.3",
     "react-debounce-input": "^3.2.3",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "react-toast-notifications": "^2.4.4"
   },
   "devDependencies": {
     "@types/classnames": "^2.3.1",
     "@types/node": "^15.12.2",
     "@types/react": "^17.0.11",
+    "@types/react-copy-to-clipboard": "^5.0.0",
     "autoprefixer": "^10.2.6",
     "postcss": "^8.3.4",
     "tailwindcss": "^2.1.4",

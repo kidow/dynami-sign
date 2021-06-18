@@ -1,6 +1,7 @@
 import 'styles/globals.css'
 import App from 'next/app'
 import { ErrorInfo } from 'react'
+import { ToastProvider } from 'react-toast-notifications'
 
 interface Props {}
 interface State {
@@ -20,7 +21,11 @@ class MyApp extends App<Props, {}, State> {
   render() {
     const {} = this.state
     const { Component, pageProps } = this.props
-    return <Component {...pageProps} />
+    return (
+      <ToastProvider autoDismiss placement="top-center">
+        <Component {...pageProps} />
+      </ToastProvider>
+    )
   }
 }
 

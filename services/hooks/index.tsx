@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { useToasts } from 'react-toast-notifications'
 
 export function useObject<T>(
   initialObject: T
@@ -32,4 +33,15 @@ export function useObject<T>(
     callbackRef.current?.(state)
   }, [state])
   return [state, onChange, onEventChange]
+}
+
+export function useToast() {
+  const { addToast } = useToasts()
+  const success = (content: string) =>
+    addToast(content, { appearance: 'success' })
+  const info = (content: string) => addToast(content, { appearance: 'info' })
+  const error = (content: string) => addToast(content, { appearance: 'error' })
+  const warning = (content: string) =>
+    addToast(content, { appearance: 'warning' })
+  return { success, info, error, warning }
 }
