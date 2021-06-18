@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const html = getHtml({ title, description })
     const file = await getScreenshot(html)
     res.statusCode = 200
-    res.setHeader('Content-Type', 'image/png')
+    res.setHeader('Content-Type', 'image/png; charset=utf-8')
     res.setHeader(
       'Cache-Control',
       'public, immutable, no-transform, s-maxage=31536000, max-age=31536000'

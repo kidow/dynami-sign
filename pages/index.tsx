@@ -60,6 +60,7 @@ const HomePage = () => {
           />
         </div>
       </div>
+      <div className="container mx-auto">템플릿들</div>
     </>
   )
 }
