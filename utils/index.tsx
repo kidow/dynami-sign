@@ -45,12 +45,10 @@ export const getScreenshot = async (html: string) => {
 }
 
 export const getHtml = (props?: Params) => {
-  const title = props
-    ? props.title
-    : 'WSL2 Failed to complete request socket hang up'
+  const title = props ? props.title : 'DynamiSign'
   const description = props
     ? props.description
-    : 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate recusandae nihil optio incidu...'
+    : '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.'
   return `<!DOCTYPE html>
   <html>
     <meta charset="utf-8" />
@@ -62,6 +60,7 @@ export const getHtml = (props?: Params) => {
       }
       .container {
         padding: 4rem;
+        max-width: 768px;
       }
       .title {
         font-size: 4rem;

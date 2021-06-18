@@ -12,8 +12,9 @@ interface State extends Params {
 
 const HomePage = () => {
   const [{ title, description, date, thumbnail }, setState] = useObject<State>({
-    title: 'Dynamic Sign',
-    description: 'Dynamic open graph image maker',
+    title: 'DynamiSign',
+    description:
+      '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.',
     date: '',
     thumbnail: `${baseURL}/api/sign`
   })
@@ -29,7 +30,7 @@ const HomePage = () => {
     <>
       <ReSEO />
       <div className="container mx-auto my-4 max-w-3xl">
-        <div>
+        <div className="mb-4 cursor-pointer">
           <CopyToClipboard
             text={thumbnail}
             onCopy={() => toast.success('이미지 URL이 복사되었습니다.')}
@@ -39,7 +40,6 @@ const HomePage = () => {
               width={1200}
               src={thumbnail}
               alt="sign"
-              className="cursor-pointer"
               layout="responsive"
             />
           </CopyToClipboard>
@@ -55,6 +55,7 @@ const HomePage = () => {
             value={description}
             name="description"
             label="설명"
+            className="w-full"
             onChange={(value) => onChange(value, 'description')}
           />
         </div>

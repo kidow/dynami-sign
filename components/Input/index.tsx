@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react'
 import classnames from 'classnames'
+import { ReLabel } from 'components'
 
 interface Props
   extends React.DetailedHTMLProps<
@@ -12,7 +13,7 @@ interface Props
 const ReInput: FunctionComponent<Props> = ({ label, className, ...props }) => {
   return (
     <div className="mb-4">
-      {!!label && <label className="block">{label}</label>}
+      {!!label && <ReLabel>{label}</ReLabel>}
       <input
         className={classnames('p-3 rounded-sm shadow-sm', className)}
         spellCheck={false}

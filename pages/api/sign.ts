@@ -2,9 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getHtml, getScreenshot } from 'utils'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const title = (req.query.title as string) || 'Dynamic Sign'
+  const title = (req.query.title as string) || 'DynamiSign'
   const description =
-    (req.query.description as string) || 'Dynamic open graph image maker'
+    (req.query.description as string) ||
+    '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.'
   try {
     const html = getHtml({ title, description })
     const file = await getScreenshot(html)
