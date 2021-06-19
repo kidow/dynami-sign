@@ -19,9 +19,9 @@ const getOptions = async (): Promise<ChromeOptions> => {
   }
   if (!isDev) {
     options = {
-      args: ['--font-render-hinting=none'],
+      args: chrome.args,
       executablePath: await chrome.executablePath,
-      headless: true
+      headless: chrome.headless
     }
   }
   return options
@@ -41,8 +41,10 @@ export const getScreenshot = async (html: string) => {
   const page = await getPage()
   await page.setViewport({ width: 1200, height: 600 })
   await page.setContent(html)
-  await page.$eval
-  const file = (await page.screenshot({ type: 'png' })) as Buffer
+  await page.setUserAgent(
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'
+  )
+  const file = await page.screenshot({ type: 'png' })
   return file
 }
 
