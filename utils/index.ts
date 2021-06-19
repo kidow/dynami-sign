@@ -19,7 +19,7 @@ const getOptions = async (): Promise<ChromeOptions> => {
   }
   if (!isDev) {
     options = {
-      args: [...chrome.args, '--font-render-hinting=medium'],
+      args: [...chrome.args, '--font-render-hinting=none'],
       executablePath: await chrome.executablePath,
       headless: true
     }
