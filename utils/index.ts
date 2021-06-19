@@ -1,9 +1,11 @@
 import core from 'puppeteer-core'
 import chrome from 'chrome-aws-lambda'
 import { ChromeOptions, Params } from 'types'
+import { readFileSync } from 'fs'
 
 let _page: core.Page | null
 const isDev = process.env.NODE_ENV === 'development'
+const noto = readFileSync(`./fonts/NotoSansKR-Black.otf`).toString('base64')
 const exePath =
   process.platform === 'win32'
     ? 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
@@ -31,10 +33,6 @@ const getPage = async () => {
   if (_page) return _page
 
   const options = await getOptions()
-  if (!isDev)
-    await chrome.font(
-      'https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap.ttf'
-    )
   const browser = await core.launch(options)
   _page = await browser.newPage()
   return _page
@@ -61,6 +59,12 @@ export const getHtml = (props?: Params) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+      @font-face {
+          font-family: 'Noto Sans KR';
+          font-style: normal;
+          font-weight: normal;
+          src: url(data:font/otf;charset=utf-8;base64,${noto}) format('opentype');
+      }
       * {
         text-rendering: geometricPrecision !important;
       }
@@ -73,6 +77,7 @@ export const getHtml = (props?: Params) => {
         max-width: 768px;
       }
       .title {
+        font-family: 'Noto Sans KR', sans-serif;
         font-size: 4rem;
         font-weight: bold;
         color: #2f363d;
@@ -80,6 +85,7 @@ export const getHtml = (props?: Params) => {
         margin-bottom: 2rem;
       }
       .description {
+        font-family: 'Noto Sans KR', sans-serif;
         font-size: 2rem;
         color: #6e7681;
       }
