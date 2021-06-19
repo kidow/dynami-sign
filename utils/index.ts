@@ -19,9 +19,9 @@ const getOptions = async (): Promise<ChromeOptions> => {
   }
   if (!isDev) {
     options = {
-      args: chrome.args,
+      args: [...chrome.args, '--font-render-hinting=medium'],
       executablePath: await chrome.executablePath,
-      headless: false
+      headless: true
     }
   }
   return options
