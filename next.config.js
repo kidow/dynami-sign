@@ -4,5 +4,8 @@ module.exports = {
   },
   images: {
     domains: ['localhost']
+  },
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname
   }
 }

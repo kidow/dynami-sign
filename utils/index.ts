@@ -2,10 +2,19 @@ import core from 'puppeteer-core'
 import chrome from 'chrome-aws-lambda'
 import { ChromeOptions, Params } from 'types'
 import { readFileSync } from 'fs'
+import path from 'path'
+import getConfig from 'next/config'
 
 let _page: core.Page | null
 const isDev = process.env.NODE_ENV === 'development'
-const noto = readFileSync(`./fonts/NotoSansKR-Black.otf`).toString('base64')
+const { serverRuntimeConfig } = getConfig()
+console.log(
+  'serverRuntimeConfig.PROJECT_ROOT',
+  serverRuntimeConfig.PROJECT_ROOT
+)
+const noto = readFileSync(
+  path.join(serverRuntimeConfig.PROJECT_ROOT + '/fonts/NotoSansKR-Black.otf')
+).toString('base64')
 const exePath =
   process.platform === 'win32'
     ? 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
@@ -42,9 +51,6 @@ export const getScreenshot = async (html: string) => {
   const page = await getPage()
   await page.setViewport({ width: 1200, height: 600 })
   await page.setContent(html)
-  await page.setUserAgent(
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'
-  )
   const file = await page.screenshot({ type: 'png' })
   return file
 }
@@ -63,7 +69,7 @@ export const getHtml = (props?: Params) => {
           font-family: 'Noto Sans KR';
           font-style: normal;
           font-weight: normal;
-          src: url(data:font/otf;charset=utf-8;base64,${noto}) format('opentype');
+          src: url(data:font/otf;charset=utf-8;base64,${'https://fonts.googleapis.com/css2?family=Roboto&display=swap.otf'}) format('opentype');
       }
       * {
         text-rendering: geometricPrecision !important;
