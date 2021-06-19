@@ -41,7 +41,8 @@ export const getScreenshot = async (html: string) => {
   const page = await getPage()
   await page.setViewport({ width: 1200, height: 600 })
   await page.setContent(html)
-  const file = await page.screenshot({ type: 'png' })
+  const file = (await page.screenshot({ type: 'png' })) as Buffer
+  console.log(1, Buffer.from(file.toString('utf-8')))
   return file
 }
 
