@@ -31,6 +31,10 @@ const getPage = async () => {
   if (_page) return _page
 
   const options = await getOptions()
+  if (!isDev)
+    await chrome.font(
+      'https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap.ttf'
+    )
   const browser = await core.launch(options)
   _page = await browser.newPage()
   return _page

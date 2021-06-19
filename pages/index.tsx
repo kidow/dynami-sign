@@ -56,6 +56,9 @@ const HomePage = () => {
                 'blur-sm': loading,
                 'opacity-10': loading
               })}
+              onError={() =>
+                toast.error('에러가 발생했습니다. 새로고침을 해주세요.')
+              }
             />
           </CopyToClipboard>
         </div>
