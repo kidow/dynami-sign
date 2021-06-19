@@ -1,29 +1,42 @@
 import { useObject, baseURL, useToast } from 'services'
-import { ReSEO, ReDebounceInput } from 'components'
+import { ReSEO, ReInput } from 'components'
 import { Params } from 'types'
 import queryString from 'query-string'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import classnames from 'classnames'
+import { ChangeEvent } from 'react'
 
 interface State extends Params {
   date: string
   thumbnail: string
+  loading: boolean
 }
+let timeout = -1
 
 const HomePage = () => {
-  const [{ title, description, date, thumbnail }, setState] = useObject<State>({
-    title: 'DynamiSign',
-    description:
-      '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.',
-    date: '',
-    thumbnail: `${baseURL}/api/sign`
-  })
+  const [{ title, description, date, thumbnail, loading }, setState] =
+    useObject<State>({
+      title: 'DynamiSign',
+      description:
+        '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.',
+      date: '',
+      thumbnail: `${baseURL}/api/sign`,
+      loading: false
+    })
   const toast = useToast()
-  const onChange = (value: string, name: string) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    window.clearTimeout(timeout)
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
     query[name] = value
     const newURL = queryString.stringify(query, { encode: false })
-    setState({ thumbnail: baseURL + '/api/sign?' + newURL })
+    timeout = window.setTimeout(() => setState({}), 200)
+    setState({
+      thumbnail: baseURL + '/api/sign?' + newURL,
+      loading: true,
+      [name]: value
+    })
   }
   return (
     <>
@@ -37,23 +50,28 @@ const HomePage = () => {
             <img
               src={thumbnail}
               alt="sign"
-              title="이미지를 클릭해서 주소를 복사하세요."
+              title="클릭해서 이미지 주소를 복사하세요."
+              onLoad={() => setState({ loading: false })}
+              className={classnames({
+                'blur-sm': loading,
+                'opacity-10': loading
+              })}
             />
           </CopyToClipboard>
         </div>
         <div>
-          <ReDebounceInput
+          <ReInput
             value={title}
             name="title"
             label="타이틀"
-            onChange={(value) => onChange(value, 'title')}
+            onChange={onChange}
           />
-          <ReDebounceInput
+          <ReInput
             value={description}
             name="description"
             label="설명"
             className="w-full"
-            onChange={(value) => onChange(value, 'description')}
+            onChange={onChange}
           />
         </div>
       </div>

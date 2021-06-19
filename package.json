@@ -16,7 +16,6 @@
     "query-string": "^7.0.0",
     "react": "17.x",
     "react-copy-to-clipboard": "^5.0.3",
-    "react-debounce-input": "^3.2.3",
     "react-dom": "17.x",
     "react-toast-notifications": "^2.4.4"
   },
