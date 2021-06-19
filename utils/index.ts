@@ -21,7 +21,7 @@ const getOptions = async (): Promise<ChromeOptions> => {
     options = {
       args: chrome.args,
       executablePath: await chrome.executablePath,
-      headless: chrome.headless
+      headless: false
     }
   }
   return options
@@ -41,8 +41,8 @@ export const getScreenshot = async (html: string) => {
   const page = await getPage()
   await page.setViewport({ width: 1200, height: 600 })
   await page.setContent(html)
+  await page.$eval
   const file = (await page.screenshot({ type: 'png' })) as Buffer
-  console.log(1, Buffer.from(file.toString('utf-8')))
   return file
 }
 
