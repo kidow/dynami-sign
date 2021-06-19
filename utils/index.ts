@@ -19,7 +19,11 @@ const getOptions = async (): Promise<ChromeOptions> => {
   }
   if (!isDev) {
     options = {
-      args: chrome.args,
+      args: [
+        ...chrome.args,
+        '--font-render-hinting=none',
+        '--force-color-profile=srgb'
+      ],
       executablePath: await chrome.executablePath,
       headless: chrome.headless
     }
