@@ -1,8 +1,8 @@
-import { chromium, Page } from 'playwright'
+import core from 'puppeteer-core'
 import chrome from 'chrome-aws-lambda'
 import { ChromeOptions, Params } from 'types'
 
-let _page: Page | null
+let _page: core.Page | null
 const isDev = process.env.NODE_ENV === 'development'
 const exePath =
   process.platform === 'win32'
@@ -31,18 +31,18 @@ const getPage = async () => {
   if (_page) return _page
 
   const options = await getOptions()
-  const browser = await chromium.launch(options)
-  const context = await browser.newContext({
-    extraHTTPHeaders: { 'Content-Type': 'charset=utf-8' }
-  })
-  _page = await context.newPage()
+  const browser = await core.launch(options)
+  _page = await browser.newPage()
   return _page
 }
 
 export const getScreenshot = async (html: string) => {
   const page = await getPage()
-  await page.setViewportSize({ width: 1200, height: 600 })
+  await page.setViewport({ width: 1200, height: 600 })
   await page.setContent(html)
+  await page.setUserAgent(
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'
+  )
   const file = await page.screenshot({ type: 'png' })
   return file
 }

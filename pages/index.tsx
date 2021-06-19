@@ -34,7 +34,11 @@ const HomePage = () => {
             text={thumbnail}
             onCopy={() => toast.success('이미지 URL이 복사되었습니다.')}
           >
-            <img src={thumbnail} alt="sign" />
+            <img
+              src={thumbnail}
+              alt="sign"
+              title="이미지를 클릭해서 주소를 복사하세요."
+            />
           </CopyToClipboard>
         </div>
         <div>
