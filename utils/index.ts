@@ -32,7 +32,8 @@ const getPage = async () => {
 
   const options = await getOptions()
   const browser = await core.launch(options)
-  _page = await browser.newPage()
+  const context = await browser.createIncognitoBrowserContext()
+  _page = await context.newPage()
   return _page
 }
 
