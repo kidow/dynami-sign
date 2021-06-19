@@ -2,7 +2,6 @@ import { useObject, baseURL, useToast } from 'services'
 import { ReSEO, ReDebounceInput } from 'components'
 import { Params } from 'types'
 import queryString from 'query-string'
-import Image from 'next/image'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 interface State extends Params {
@@ -35,13 +34,7 @@ const HomePage = () => {
             text={thumbnail}
             onCopy={() => toast.success('이미지 URL이 복사되었습니다.')}
           >
-            <Image
-              height={600}
-              width={1200}
-              src={thumbnail}
-              alt="sign"
-              layout="responsive"
-            />
+            <img src={thumbnail} alt="sign" />
           </CopyToClipboard>
         </div>
         <div>
