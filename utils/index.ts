@@ -1,20 +1,9 @@
 import core from 'puppeteer-core'
 import chrome from 'chrome-aws-lambda'
 import { ChromeOptions, Params } from 'types'
-import { readFileSync } from 'fs'
-import path from 'path'
-import getConfig from 'next/config'
 
 let _page: core.Page | null
 const isDev = process.env.NODE_ENV === 'development'
-const { serverRuntimeConfig } = getConfig()
-console.log(
-  'serverRuntimeConfig.PROJECT_ROOT',
-  serverRuntimeConfig.PROJECT_ROOT
-)
-const noto = readFileSync(
-  path.join(serverRuntimeConfig.PROJECT_ROOT + '/fonts/NotoSansKR-Black.otf')
-).toString('base64')
 const exePath =
   process.platform === 'win32'
     ? 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
