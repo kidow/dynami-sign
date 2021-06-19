@@ -3,7 +3,7 @@ import chrome from 'chrome-aws-lambda'
 import { ChromeOptions, Params } from 'types'
 
 let _page: core.Page | null
-export const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development'
 const exePath =
   process.platform === 'win32'
     ? 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
@@ -58,6 +58,9 @@ export const getHtml = (props?: Params) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+      * {
+        text-rendering: geometricPrecision !important;
+      }
       html {
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
           Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
