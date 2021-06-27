@@ -1,3 +1,6 @@
+const path = require('path')
+const CopyPlugin = require('copy-webpack-plugin')
+
 module.exports = {
   devIndicators: {
     autoPrerender: false
@@ -5,7 +8,22 @@ module.exports = {
   images: {
     domains: ['localhost']
   },
-  serverRuntimeConfig: {
-    PROJECT_ROOT: __dirname
+  target: 'serverless',
+  future: {
+    webpack5: true
+  },
+  webpack: function (config, { dev, isServer }) {
+    if (!isServer) {
+      config.resolve.fallback.fs = false
+    }
+    if (!dev) {
+      config.plugins.push(
+        new CopyPlugin({
+          patterns: [{ from: 'content', to: 'content' }]
+        })
+      )
+    }
+
+    return config
   }
 }
