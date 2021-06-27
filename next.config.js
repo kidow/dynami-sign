@@ -8,7 +8,6 @@ module.exports = {
   images: {
     domains: ['localhost']
   },
-  target: 'serverless',
   future: {
     webpack5: true
   },
@@ -19,7 +18,7 @@ module.exports = {
     if (!dev) {
       config.plugins.push(
         new CopyPlugin({
-          patterns: [{ from: 'content', to: 'content' }]
+          patterns: [{ from: 'fonts', to: 'fonts' }]
         })
       )
     }

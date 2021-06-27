@@ -53,7 +53,6 @@ export const getHtml = (props?: Params) => {
   }
 
   const filePath = path.join(basePath, 'fonts/NotoSansKR.woff2')
-  console.log('filePath', filePath)
   const fontFile = readFileSync(filePath).toString('base64')
 
   const title = props ? props.title : 'DynamiSign'
