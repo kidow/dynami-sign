@@ -56,23 +56,17 @@ export const getHtml = (props?: Params) => {
     <style>
       @font-face {
           font-family: 'Noto Sans KR';
-          font-style: normal;
-          font-weight: normal;
-          src: url(data:font/otf;charset=utf-8;base64,${'https://fonts.googleapis.com/css2?family=Roboto&display=swap.otf'}) format('opentype');
+          src: url("/fonts/NotoSansKR.woff2");
       }
-      * {
-        text-rendering: geometricPrecision !important;
-      }
-      html {
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-          Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+      body {
+        font-family: 'Noto Sans KR', sans-serif;
+        font-style: normal;
       }
       .container {
         padding: 4rem;
         max-width: 768px;
       }
       .title {
-        font-family: 'Noto Sans KR', sans-serif;
         font-size: 4rem;
         font-weight: bold;
         color: #2f363d;
@@ -80,7 +74,6 @@ export const getHtml = (props?: Params) => {
         margin-bottom: 2rem;
       }
       .description {
-        font-family: 'Noto Sans KR', sans-serif;
         font-size: 2rem;
         color: #6e7681;
       }
