@@ -25,7 +25,6 @@ const getOptions = async () => {
     }
   }
 
-  await chrome.font('https://fonts.googleapis.com/css2?family=Noto+Sans+KR')
   return options
 }
 
@@ -33,6 +32,9 @@ const getPage = async () => {
   if (_page) return _page
 
   const options = await getOptions()
+  await chrome.font(
+    'https://rawcdn.githack.com/openmaptiles/fonts/e1c6ea642b612abcbdd6e48fc2400162c1b531da/roboto/Roboto-Regular.ttf?raw=true'
+  )
   const browser = await core.launch(options)
   _page = await browser.newPage()
   return _page
