@@ -21,7 +21,6 @@ const getOptions = async () => {
     options = {
       args: chrome.args,
       executablePath: await chrome.executablePath,
-      defaultViewport: chrome.defaultViewport,
       headless: chrome.headless
     }
   }
@@ -32,10 +31,10 @@ const getOptions = async () => {
 const getPage = async () => {
   if (_page) return _page
 
-  const options = await getOptions()
   await chrome.font(
     'https://baserow-media.ams3.digitaloceanspaces.com/user_files/4jWPSs6GjclyHd7PHxRK7fE5YcOZvmim_b3d431dc51d3e6d5fe6bbcf9f9c683aea6bc49c42c945ee08211f7cd2c85bfbf.woff2'
   )
+  const options = await getOptions()
   const browser = await puppeteer.launch(options)
   _page = await browser.newPage()
   return _page
