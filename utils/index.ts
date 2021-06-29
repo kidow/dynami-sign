@@ -1,8 +1,6 @@
 import core from 'puppeteer-core'
 import chrome from 'chrome-aws-lambda'
-import { ChromeOptions, Params } from 'types'
-import { readFileSync } from 'fs'
-import path from 'path'
+import { Params } from 'types'
 
 let _page: core.Page | null
 const isDev = process.env.NODE_ENV === 'development'
@@ -13,8 +11,8 @@ const exePath =
     ? '/usr/bin/google-chrome'
     : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
-const getOptions = async (): Promise<ChromeOptions> => {
-  let options: ChromeOptions = {
+const getOptions = async () => {
+  let options: any = {
     args: [],
     executablePath: exePath,
     headless: true
@@ -26,6 +24,8 @@ const getOptions = async (): Promise<ChromeOptions> => {
       headless: chrome.headless
     }
   }
+
+  await chrome.font('https://fonts.googleapis.com/css2?family=Noto+Sans+KR')
   return options
 }
 
@@ -47,14 +47,6 @@ export const getScreenshot = async (html: string) => {
 }
 
 export const getHtml = (props?: Params) => {
-  let basePath = process.cwd()
-  if (process.env.NODE_ENV === 'production') {
-    basePath = path.join(process.cwd(), '.next/server/chunks')
-  }
-
-  const filePath = path.join(basePath, 'fonts/NotoSansKR.woff2')
-  const fontFile = readFileSync(filePath).toString('base64')
-
   const title = props ? props.title : 'DynamiSign'
   const description = props
     ? props.description
@@ -64,14 +56,6 @@ export const getHtml = (props?: Params) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-      @font-face {
-          font-family: 'Noto Sans KR';
-          src: url(data:font/woff2;charset=utf-8;base64,${fontFile}) opentype('woff2');
-      }
-      body {
-        font-family: 'Noto Sans KR', sans-serif;
-        font-style: normal;
-      }
       .container {
         padding: 4rem;
         max-width: 768px;

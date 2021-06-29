@@ -13,6 +13,7 @@
     "classnames": "^2.3.1",
     "copy-webpack-plugin": "^9.0.1",
     "next": "10.x",
+    "puppeteer": "^10.1.0",
     "puppeteer-core": "^10.0.0",
     "query-string": "^7.0.0",
     "react": "17.x",
