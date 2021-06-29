@@ -1,8 +1,8 @@
-import core from 'puppeteer-core'
+import puppeteer from 'puppeteer-core'
 import chrome from 'chrome-aws-lambda'
 import { Params } from 'types'
 
-let _page: core.Page | null
+let _page: puppeteer.Page | null
 const isDev = process.env.NODE_ENV === 'development'
 const exePath =
   process.platform === 'win32'
@@ -21,6 +21,7 @@ const getOptions = async () => {
     options = {
       args: chrome.args,
       executablePath: await chrome.executablePath,
+      defaultViewport: chrome.defaultViewport,
       headless: chrome.headless
     }
   }
@@ -33,9 +34,9 @@ const getPage = async () => {
 
   const options = await getOptions()
   await chrome.font(
-    'https://rawcdn.githack.com/openmaptiles/fonts/e1c6ea642b612abcbdd6e48fc2400162c1b531da/roboto/Roboto-Regular.ttf?raw=true'
+    'https://baserow-media.ams3.digitaloceanspaces.com/user_files/4jWPSs6GjclyHd7PHxRK7fE5YcOZvmim_b3d431dc51d3e6d5fe6bbcf9f9c683aea6bc49c42c945ee08211f7cd2c85bfbf.woff2'
   )
-  const browser = await core.launch(options)
+  const browser = await puppeteer.launch(options)
   _page = await browser.newPage()
   return _page
 }
