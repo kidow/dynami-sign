@@ -32,7 +32,7 @@ const getPage = async () => {
   if (_page) return _page
 
   await chrome.font(
-    'https://baserow-media.ams3.digitaloceanspaces.com/user_files/4jWPSs6GjclyHd7PHxRK7fE5YcOZvmim_b3d431dc51d3e6d5fe6bbcf9f9c683aea6bc49c42c945ee08211f7cd2c85bfbf.woff2'
+    'https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-ExtraLight-subset.woff'
   )
   const options = await getOptions()
   const browser = await puppeteer.launch(options)
@@ -58,6 +58,27 @@ export const getHtml = (props?: Params) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+      @font-face {
+        font-family: 'Noto Serif KR';
+        font-style: normal;
+        font-weight: 100;
+        src: local('Noto Serif CJK KR'), local('Source Han Serif K'), local('Source Han Serif'), local('Noto Serif CJK'), local('Noto Serif'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-ExtraLight-subset.woff) format('woff'),url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-ExtraLight-subset.woff2) format('woff2'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-ExtraLight-subset.otf) format('otf');
+      }
+      @font-face {
+          font-family: 'Noto Serif KR';
+          font-style: normal;
+          font-weight: 300;
+          src: local('Noto Serif CJK KR'), local('Source Han Serif K'), local('Source Han Serif'), local('Noto Serif CJK'), local('Noto Serif'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Regular-subset.woff) format('woff'),url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Regular-subset.woff2) format('woff2'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Regular-subset.otf) format('otf');
+      }
+      @font-face {
+          font-family: 'Noto Serif KR';
+          font-style: normal;
+          font-weight: 600;
+          src: local('Noto Serif CJK KR'), local('Source Han Serif K'), local('Source Han Serif'), local('Noto Serif CJK'), local('Noto Serif'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Bold-subset.woff) format('woff'),url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Bold-subset.woff2) format('woff2'),  url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Bold-subset.otf) format('otf');
+      }
+      * {
+        font-family: 'Noto Serif KR';
+      }
       .container {
         padding: 4rem;
         max-width: 768px;
