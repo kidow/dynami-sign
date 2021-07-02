@@ -92,8 +92,14 @@ export const getHtml = (props?: Params) => {
         max-width: 768px;
         margin: 0 auto;
       }
+      .logo-box {
+        margin-bottom: 2.5rem;
+      }
+      .logo {
+        width: 120px;
+      }
       .title {
-        font-size: 4rem;
+        font-size: 5rem;
         font-weight: bold;
         color: #2f363d;
         line-height: 1.2;
@@ -102,10 +108,18 @@ export const getHtml = (props?: Params) => {
       .description {
         font-size: 2rem;
         color: #6e7681;
+        line-height: 1.5;
       }
     </style>
     <body>
       <div class="container">
+        <div class="logo-box">
+          <img
+            src="https://cdn.jsdelivr.net/gh/remojansen/logo.ts@master/ts.svg"
+            alt="logo"
+            class="logo"
+          />
+        </div>
         <div class="title">${title}</div>
         <div class="description">
           ${description}
