@@ -52,11 +52,11 @@ const HomePage = () => {
               alt="sign"
               title="클릭해서 이미지 주소를 복사하세요."
               onLoad={() => setState({ loading: false })}
-              className={classnames({
+              className={classnames('shadow-md hover:shadow-lg', {
                 'blur-sm': loading,
-                'opacity-10': loading
+                'opacity-40': loading
               })}
-              onError={(err) =>
+              onError={() =>
                 toast.error('에러가 발생했습니다. 새로고침을 해주세요.')
               }
             />

@@ -15,7 +15,7 @@ export interface Props {
 const ReSEO: FunctionComponent<Props> = ({
   title,
   description = 'Dynamic open graph image maker',
-  image = `${baseURL}/sign`,
+  image = `${baseURL}/api/sign`,
   ldJson,
   noSEO = false
 }) => {

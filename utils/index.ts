@@ -79,9 +79,18 @@ export const getHtml = (props?: Params) => {
       * {
         font-family: 'Noto Serif KR';
       }
+      body {
+        text-align: center;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
       .container {
         padding: 4rem;
         max-width: 768px;
+        margin: 0 auto;
       }
       .title {
         font-size: 4rem;
