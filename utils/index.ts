@@ -49,9 +49,9 @@ export const getScreenshot = async (html: string) => {
 }
 
 export const getHtml = (props?: Params) => {
-  const title = props ? props.title : 'DynamiSign'
+  const title = props ? props.t : 'DynamiSign'
   const description = props
-    ? props.description
+    ? props.d
     : '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.'
   return `<!DOCTYPE html>
   <html>
@@ -59,25 +59,25 @@ export const getHtml = (props?: Params) => {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       @font-face {
-        font-family: 'Noto Serif KR';
-        font-style: normal;
-        font-weight: 100;
-        src: local('Noto Serif CJK KR'), local('Source Han Serif K'), local('Source Han Serif'), local('Noto Serif CJK'), local('Noto Serif'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-ExtraLight-subset.woff) format('woff'),url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-ExtraLight-subset.woff2) format('woff2'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-ExtraLight-subset.otf) format('otf');
+        font-family: 'Pretendard';
+        font-weight: 300;
+        font-display: swap;
+        src: local('Pretendard Light'),
+          url('./woff2/Pretendard-Light.woff2') format('woff2'),
+          url('./woff/Pretendard-Light.woff') format('woff');
       }
       @font-face {
-          font-family: 'Noto Serif KR';
-          font-style: normal;
-          font-weight: 300;
-          src: local('Noto Serif CJK KR'), local('Source Han Serif K'), local('Source Han Serif'), local('Noto Serif CJK'), local('Noto Serif'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Regular-subset.woff) format('woff'),url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Regular-subset.woff2) format('woff2'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Regular-subset.otf) format('otf');
-      }
-      @font-face {
-          font-family: 'Noto Serif KR';
-          font-style: normal;
-          font-weight: 600;
-          src: local('Noto Serif CJK KR'), local('Source Han Serif K'), local('Source Han Serif'), local('Noto Serif CJK'), local('Noto Serif'), url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Bold-subset.woff) format('woff'),url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Bold-subset.woff2) format('woff2'),  url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Katter/7392ea08/fonts/NotoSerifCJKkr-Bold-subset.otf) format('otf');
+        font-family: 'Pretendard';
+        font-weight: 600;
+        font-display: swap;
+        src: local('Pretendard SemiBold'),
+          url('./woff2/Pretendard-SemiBold.woff2') format('woff2'),
+          url('./woff/Pretendard-SemiBold.woff') format('woff');
       }
       * {
-        font-family: 'Noto Serif KR';
+        font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+          Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic',
+          sans-serif;
       }
       body {
         text-align: center;
@@ -92,18 +92,12 @@ export const getHtml = (props?: Params) => {
         max-width: 768px;
         margin: 0 auto;
       }
-      .logo-box {
-        margin-bottom: 2.5rem;
-      }
-      .logo {
-        width: 120px;
-      }
       .title {
         font-size: 5rem;
         font-weight: bold;
         color: #2f363d;
         line-height: 1.2;
-        margin-bottom: 2rem;
+        margin-bottom: 5rem;
       }
       .description {
         font-size: 2rem;
@@ -113,13 +107,6 @@ export const getHtml = (props?: Params) => {
     </style>
     <body>
       <div class="container">
-        <div class="logo-box">
-          <img
-            src="https://cdn.jsdelivr.net/gh/remojansen/logo.ts@master/ts.svg"
-            alt="logo"
-            class="logo"
-          />
-        </div>
         <div class="title">${title}</div>
         <div class="description">
           ${description}

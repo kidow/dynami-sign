@@ -1,4 +1,4 @@
 export interface Params {
-  title: string
-  description: string
+  t: string
+  d: string
 }

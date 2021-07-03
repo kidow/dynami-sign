@@ -6,23 +6,21 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import classnames from 'classnames'
 import { ChangeEvent } from 'react'
 
-interface State extends Params {
-  date: string
+interface State {
+  t: string
+  d: string
   thumbnail: string
   loading: boolean
 }
 let timeout = -1
 
 const HomePage = () => {
-  const [{ title, description, date, thumbnail, loading }, setState] =
-    useObject<State>({
-      title: 'DynamiSign',
-      description:
-        '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.',
-      date: '',
-      thumbnail: `${baseURL}/api/sign`,
-      loading: false
-    })
+  const [{ t, d, thumbnail, loading }, setState] = useObject<State>({
+    t: 'DynamiSign',
+    d: '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.',
+    thumbnail: `${baseURL}/api/sign`,
+    loading: false
+  })
   const toast = useToast()
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -63,22 +61,17 @@ const HomePage = () => {
           </CopyToClipboard>
         </div>
         <div>
+          <ReInput value={t} name="t" label="타이틀" onChange={onChange} />
           <ReInput
-            value={title}
-            name="title"
-            label="타이틀"
-            onChange={onChange}
-          />
-          <ReInput
-            value={description}
-            name="description"
+            value={d}
+            name="d"
             label="설명"
             className="w-full"
             onChange={onChange}
           />
         </div>
       </div>
-      <div className="container mx-auto">템플릿들</div>
+      <div className="container mx-auto"></div>
     </>
   )
 }
