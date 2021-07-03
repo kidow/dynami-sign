@@ -1,6 +1,5 @@
 import { useObject, baseURL, useToast } from 'services'
 import { ReSEO, ReInput } from 'components'
-import { Params } from 'types'
 import queryString from 'query-string'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import classnames from 'classnames'
@@ -17,8 +16,8 @@ let timeout = -1
 const HomePage = () => {
   const [{ t, d, thumbnail, loading }, setState] = useObject<State>({
     t: 'DynamiSign',
-    d: '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.',
-    thumbnail: `${baseURL}/api/sign`,
+    d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
+    thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
     loading: false
   })
   const toast = useToast()
@@ -65,7 +64,7 @@ const HomePage = () => {
           <ReInput
             value={d}
             name="d"
-            label="설명"
+            label="설명 (선택)"
             className="w-full"
             onChange={onChange}
           />
