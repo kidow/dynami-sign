@@ -52,7 +52,7 @@ export const getHtml = (props?: Params) => {
   const title = props ? props.t : 'DynamiSign'
   const description = props
     ? props.d
-    : '이미지를 동적으로 만들어 주는 서비스입니다. \n이미지 클릭 시 주소가 복사됩니다.'
+    : '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.'
   return `<!DOCTYPE html>
   <html>
     <meta charset="utf-8" />

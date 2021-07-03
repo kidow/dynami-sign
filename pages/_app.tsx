@@ -1,6 +1,7 @@
 import 'styles/globals.css'
 import App from 'next/app'
 import { ErrorInfo } from 'react'
+import { ReAnalytics } from 'components'
 import { ToastProvider } from 'react-toast-notifications'
 
 interface Props {}
@@ -22,9 +23,11 @@ class MyApp extends App<Props, {}, State> {
     const {} = this.state
     const { Component, pageProps } = this.props
     return (
-      <ToastProvider autoDismiss placement="top-center">
-        <Component {...pageProps} />
-      </ToastProvider>
+      <ReAnalytics>
+        <ToastProvider autoDismiss placement="top-center">
+          <Component {...pageProps} />
+        </ToastProvider>
+      </ReAnalytics>
     )
   }
 }
