@@ -71,8 +71,8 @@ export const getHtml = (props?: Params) => {
         font-weight: 600;
         font-display: swap;
         src: local('Pretendard SemiBold'),
-          url('/woff2-dynamic-subset/Pretendard-Thin.subset.0.woff2/woff2/Pretendard-SemiBold.woff2') format('woff2'),
-          url('/woff2-dynamic-subset/Pretendard-Thin.subset.0.woff2/woff/Pretendard-SemiBold.woff') format('woff');
+          url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff2/Pretendard-SemiBold.woff2') format('woff2'),
+          url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff/Pretendard-SemiBold.woff') format('woff');
       }
       * {
         font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
