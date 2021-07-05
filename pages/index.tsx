@@ -60,7 +60,13 @@ const HomePage = () => {
           </CopyToClipboard>
         </div>
         <div>
-          <ReInput value={t} name="t" label="타이틀" onChange={onChange} />
+          <ReInput
+            className="w-full"
+            value={t}
+            name="t"
+            label="타이틀"
+            onChange={onChange}
+          />
           <ReInput
             value={d}
             name="d"

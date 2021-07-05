@@ -13,4 +13,23 @@ URL: [https://dynamisign.com/api/sign?d=%EC%A0%9C%EB%AA%A9%EC%9D%84%20t%EB%A1%9C
 
 # 사용 방법
 
-html meta tag 중 `og:image` 혹은 `twitter:image` 속성의 `content` 값으로 해당 url을 넣으면 자동으로 이미지가 반영됩니다.
+해당 이미지는 다음과 같은 주소로 만들어 집니다.
+
+> https://dynamisign.com/api/sign?t=[title]&d=[description]
+
+title에 제
+
+html meta tag 중 `og:image` 혹은 `twitter:image`를 속성값으로 주고 `content` 에 해당 url을 넣으면 자동으로 이미지가 반영됩니다.
+
+```html
+<html>
+    <head>
+        ...
+        <meta property="og:image" content="https://dynamisign.com/api/sign">
+        <meta property="twitter:image" content="https://dynamisign.com/api/sign">
+        ...
+    </head>
+</html>
+```
+
+![확인](public/opengraph.png)
