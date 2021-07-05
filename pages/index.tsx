@@ -28,7 +28,7 @@ const HomePage = () => {
     const query = queryString.parse(url)
     query[name] = value
     const newURL = queryString.stringify(query, { encode: false })
-    timeout = window.setTimeout(() => setState({}), 200)
+    timeout = window.setTimeout(() => {}, 200)
     setState({
       thumbnail: `${baseURL}/api/sign?${newURL}`,
       loading: true,

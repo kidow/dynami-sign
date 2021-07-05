@@ -43,7 +43,23 @@ const getPage = async () => {
 export const getScreenshot = async (html: string) => {
   const page = await getPage()
   await page.setViewport({ width: 1200, height: 600 })
-  await page.setContent(html)
+  await page.setContent(html, { waitUntil: 'domcontentloaded' })
+  await page.evaluate(async () => {
+    const selectors = Array.from(document.querySelectorAll('img'))
+    await Promise.all([
+      document.fonts.ready,
+      ...selectors.map((img) => {
+        if (img.complete) {
+          if (img.naturalHeight !== 0) return
+          throw new Error('Image failed to load')
+        }
+        return new Promise((resolve, reject) => {
+          img.addEventListener('load', resolve)
+          img.addEventListener('error', reject)
+        })
+      })
+    ])
+  })
   const file = await page.screenshot({ type: 'png' })
   return file
 }
