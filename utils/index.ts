@@ -97,7 +97,7 @@ export const getHtml = (props?: Params) => {
         font-weight: bold;
         color: #2f363d;
         line-height: 1.2;
-        margin-bottom: 5rem;
+        margin-bottom: 4rem;
       }
       .description {
         font-size: 2rem;

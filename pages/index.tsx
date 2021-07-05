@@ -30,7 +30,7 @@ const HomePage = () => {
     const newURL = queryString.stringify(query, { encode: false })
     timeout = window.setTimeout(() => setState({}), 200)
     setState({
-      thumbnail: baseURL + '/api/sign?' + newURL,
+      thumbnail: `${baseURL}/api/sign?${newURL}`,
       loading: true,
       [name]: value
     })
@@ -41,7 +41,7 @@ const HomePage = () => {
       <div className="container mx-auto my-4 max-w-3xl">
         <div className="mb-4 cursor-pointer">
           <CopyToClipboard
-            text={thumbnail}
+            text={encodeURI(thumbnail)}
             onCopy={() => toast.success('이미지 URL이 복사되었습니다.')}
           >
             <img

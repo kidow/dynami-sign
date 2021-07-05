@@ -1,34 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DynamiSign
 
-## Getting Started
+![thumbnail](https://dynamisign.com/api/sign?d=다이나미사인)
 
-First, run the development server:
+DynamiSign은 동적으로 Open Graph Image를 만들 수 있는 기능을 제공합니다.
+title과 description을 파라미터로 받으면, 그에 따라 이미지의 내용이 변경됩니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+# 예시
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![eg](https://dynamisign.com/api/sign?d=%EC%A0%9C%EB%AA%A9%EC%9D%84%20t%EB%A1%9C,%20%EB%82%B4%EC%9A%A9%EC%9D%80%20d%EB%A1%9C%20%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0%EB%A5%BC%20%EC%A0%84%EB%8B%AC%ED%95%A9%EB%8B%88%EB%8B%A4.&t=%EB%8F%99%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%9D%98%20%EB%82%B4%EC%9A%A9%EC%9D%84%20%EB%B3%80%EA%B2%BD%ED%95%98%EB%8A%94%20%EB%B2%95)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+URL: [https://dynamisign.com/api/sign?d=%EC%A0%9C%EB%AA%A9%EC%9D%84%20t%EB%A1%9C,%20%EB%82%B4%EC%9A%A9%EC%9D%80%20d%EB%A1%9C%20%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0%EB%A5%BC%20%EC%A0%84%EB%8B%AC%ED%95%A9%EB%8B%88%EB%8B%A4.&t=%EB%8F%99%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%9D%98%20%EB%82%B4%EC%9A%A9%EC%9D%84%20%EB%B3%80%EA%B2%BD%ED%95%98%EB%8A%94%20%EB%B2%95](url)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+# 사용 방법
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+html meta tag 중 `og:image` 혹은 `twitter:image` 속성의 `content` 값으로 해당 url을 넣으면 자동으로 이미지가 반영됩니다.
