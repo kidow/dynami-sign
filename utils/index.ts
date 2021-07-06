@@ -118,13 +118,13 @@ export const getHtml = (props?: Params) => {
       .title {
         font-size: 5rem;
         font-weight: bold;
-        color: ${theme === 'light' ? '#24292e' : '#c0c0c0'};
+        color: ${theme === 'light' ? '#121212' : '#fff'};
         line-height: 1.2;
         margin-bottom: 3rem;
       }
       .description {
         font-size: 2.5rem;
-        color: ${theme === 'light' ? '#24292e' : '#c0c0c0'};
+        color: ${theme === 'light' ? '#121212' : '#c0c0c0'};
         line-height: 1.5;
       }
     </style>

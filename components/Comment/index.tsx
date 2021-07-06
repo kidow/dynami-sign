@@ -1,4 +1,4 @@
-import { createRef, FunctionComponent, memo, useLayoutEffect } from 'react'
+import { createRef, FunctionComponent, memo, useEffect } from 'react'
 
 interface Props {
   repo: string
@@ -7,7 +7,7 @@ interface Props {
 
 const ReComment: FunctionComponent<Props> = ({ repo, theme }) => {
   const ref = createRef<HTMLDivElement>()
-  useLayoutEffect(() => {
+  useEffect(() => {
     const utterances = document.createElement('script')
     const attributes = {
       src: 'https://utteranc.es/client.js',
