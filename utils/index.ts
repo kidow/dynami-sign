@@ -41,27 +41,31 @@ const getPage = async () => {
 }
 
 export const getScreenshot = async (html: string) => {
-  const page = await getPage()
-  await page.setViewport({ width: 1200, height: 600 })
-  await page.setContent(html, { waitUntil: 'domcontentloaded' })
-  await page.evaluate(async () => {
-    const selectors = Array.from(document.querySelectorAll('img'))
-    await Promise.all([
-      document.fonts.ready,
-      ...selectors.map((img) => {
-        if (img.complete) {
-          if (img.naturalHeight !== 0) return
-          throw new Error('Image failed to load')
-        }
-        return new Promise((resolve, reject) => {
-          img.addEventListener('load', resolve)
-          img.addEventListener('error', reject)
+  try {
+    const page = await getPage()
+    await page.setViewport({ width: 1200, height: 600 })
+    await page.setContent(html, { waitUntil: 'domcontentloaded' })
+    await page.evaluate(async () => {
+      const selectors = Array.from(document.querySelectorAll('img'))
+      await Promise.all([
+        document.fonts.ready,
+        ...selectors.map((img) => {
+          if (img.complete) {
+            if (img.naturalHeight !== 0) return
+            throw new Error('Image failed to load')
+          }
+          return new Promise((resolve, reject) => {
+            img.addEventListener('load', resolve)
+            img.addEventListener('error', reject)
+          })
         })
-      })
-    ])
-  })
-  const file = await page.screenshot({ type: 'png' })
-  return file
+      ])
+    })
+    const file = await page.screenshot({ type: 'png' })
+    return file
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export const getHtml = (props?: Params) => {
@@ -69,6 +73,7 @@ export const getHtml = (props?: Params) => {
   const description = props
     ? props.d
     : '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.'
+  const theme = props ? props.m : 'light'
   return `<!DOCTYPE html>
   <html>
     <meta charset="utf-8" />
@@ -102,6 +107,8 @@ export const getHtml = (props?: Params) => {
         justify-content: center;
         align-items: center;
         height: 100vh;
+        word-break: keep-all;
+        background: ${theme === 'light' ? '#fff' : '#181818'}
       }
       .container {
         padding: 4rem;
@@ -111,13 +118,13 @@ export const getHtml = (props?: Params) => {
       .title {
         font-size: 5rem;
         font-weight: bold;
-        color: #2f363d;
+        color: ${theme === 'light' ? '#24292e' : '#c0c0c0'};
         line-height: 1.2;
         margin-bottom: 3rem;
       }
       .description {
         font-size: 2.5rem;
-        color: #6e7681;
+        color: ${theme === 'light' ? '#24292e' : '#c0c0c0'};
         line-height: 1.5;
       }
     </style>

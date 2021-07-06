@@ -1,24 +1,28 @@
 import { useObject, baseURL, useToast } from 'services'
-import { ReSEO, ReInput } from 'components'
+import { ReSEO, ReInput, ReListbox } from 'components'
 import queryString from 'query-string'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import classnames from 'classnames'
 import { ChangeEvent } from 'react'
+import { IItem } from 'types'
 
 interface State {
   t: string
   d: string
   thumbnail: string
   loading: boolean
+  m: IItem
 }
 let timeout = -1
+const theme: Array<IItem> = [{ name: 'light' }, { name: 'dark' }]
 
 const HomePage = () => {
-  const [{ t, d, thumbnail, loading }, setState] = useObject<State>({
+  const [{ t, d, thumbnail, loading, m }, setState] = useObject<State>({
     t: 'DynamiSign',
     d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
     thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
-    loading: false
+    loading: false,
+    m: { name: 'light' }
   })
   const toast = useToast()
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -35,10 +39,22 @@ const HomePage = () => {
       [name]: value
     })
   }
+  const onThemeChange = ({ name }: IItem) => {
+    const url = new URL(thumbnail).search
+    const query = queryString.parse(url)
+    query['m'] = name
+    console.log('query', query)
+    const newURL = queryString.stringify(query, { encode: false })
+    setState({
+      thumbnail: `${baseURL}/api/sign?${newURL}`,
+      loading: true,
+      m: { name }
+    })
+  }
   return (
     <>
       <ReSEO />
-      <div className="container mx-auto my-4 max-w-3xl">
+      <div className="container px-4 sm:px-0 mx-auto my-4 max-w-3xl">
         <div className="mb-4 cursor-pointer">
           <CopyToClipboard
             text={encodeURI(thumbnail)}
@@ -75,6 +91,12 @@ const HomePage = () => {
             onChange={onChange}
           />
         </div>
+        <ReListbox
+          list={theme}
+          value={m}
+          label="테마 (선택)"
+          onChange={onThemeChange}
+        />
       </div>
       <div className="container mx-auto"></div>
     </>
