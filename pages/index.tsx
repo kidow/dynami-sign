@@ -1,5 +1,5 @@
 import { useObject, baseURL, useToast } from 'services'
-import { ReSEO, ReInput, ReListbox, ReFooter } from 'components'
+import { ReSEO, ReInput, ReListbox, ReFooter, ReTemplate } from 'components'
 import queryString from 'query-string'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import classnames from 'classnames'
@@ -97,7 +97,16 @@ const HomePage = () => {
           onChange={onThemeChange}
         />
       </div>
-      <div className="container mx-auto"></div>
+      <div className="container mx-auto mt-20">
+        <h1 className="text-2xl mb-4 font-bold">템플릿들</h1>
+        <ul className="flex flex-wrap -mx-1 md:-mx-1.5">
+          <ReTemplate link="http://localhost:3000/api/sign" />
+          <ReTemplate link="http://localhost:3000/api/sign" />
+          <ReTemplate link="http://localhost:3000/api/sign" />
+          <ReTemplate link="http://localhost:3000/api/sign" />
+          <ReTemplate link="http://localhost:3000/api/sign" />
+        </ul>
+      </div>
       <ReFooter />
     </>
   )
