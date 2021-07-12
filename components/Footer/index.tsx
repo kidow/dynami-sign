@@ -5,7 +5,7 @@ interface State {}
 
 const ReFooter: FunctionComponent<Props> = () => {
   return (
-    <div className="bg-white">
+    <footer className="bg-white">
       <div className="container px-4 sm:px-0 mx-auto max-w-3xl">
         <div className="pt-4 pb-10 text-sm">
           <div className="font-semibold text-gray-800 mb-4">다이나미사인</div>
@@ -15,7 +15,7 @@ const ReFooter: FunctionComponent<Props> = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   )
 }
 

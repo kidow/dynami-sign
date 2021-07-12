@@ -1,5 +1,5 @@
 import { useObject, baseURL, useToast } from 'services'
-import { ReSEO, ReInput, ReListbox, ReComment, ReFooter } from 'components'
+import { ReSEO, ReInput, ReListbox, ReFooter } from 'components'
 import queryString from 'query-string'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import classnames from 'classnames'
@@ -97,10 +97,7 @@ const HomePage = () => {
           onChange={onThemeChange}
         />
       </div>
-      <div>
-        <ReComment repo="kidow/dynami-sign" theme="github-light" />
-      </div>
-      <div className="container mx-auto">Templates</div>
+      <div className="container mx-auto"></div>
       <ReFooter />
     </>
   )

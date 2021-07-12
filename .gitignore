@@ -33,5 +33,5 @@ yarn-error.log*
 # vercel
 .vercel
 
-# html
-sign.html
+# templates
+templates/*
