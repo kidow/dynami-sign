@@ -30,7 +30,7 @@ html meta tag 중 `og:image` 혹은 `twitter:image`를 속성값으로 주고 `c
 </html>
 ```
 
-![확인](public/opengraph.png)
+![확인](public/media/opengraph.png)
 
 # 참고
 

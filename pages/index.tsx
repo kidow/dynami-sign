@@ -43,7 +43,6 @@ const HomePage = () => {
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
     query['m'] = name
-    console.log('query', query)
     const newURL = queryString.stringify(query, { encode: false })
     setState({
       thumbnail: `${baseURL}/api/sign?${newURL}`,
