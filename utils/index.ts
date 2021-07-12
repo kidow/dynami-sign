@@ -68,6 +68,32 @@ export const getScreenshot = async (html: string) => {
   }
 }
 
+const getCss = () => {
+  return `
+    @font-face {
+      font-family: 'Pretendard';
+      font-weight: 300;
+      font-display: swap;
+      src: local('Pretendard Light'),
+        url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff2/Pretendard-Light.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff/Pretendard-Light.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Pretendard';
+      font-weight: 600;
+      font-display: swap;
+      src: local('Pretendard SemiBold'),
+        url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff2/Pretendard-SemiBold.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff/Pretendard-SemiBold.woff') format('woff');
+    }
+    * {
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+        Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic',
+        sans-serif;
+    }
+  `
+}
+
 export const getHtml = (props?: Params) => {
   const title = props ? props.t : 'DynamiSign'
   const description = props
@@ -79,27 +105,7 @@ export const getHtml = (props?: Params) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-      @font-face {
-        font-family: 'Pretendard';
-        font-weight: 300;
-        font-display: swap;
-        src: local('Pretendard Light'),
-          url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff2/Pretendard-Light.woff2') format('woff2'),
-          url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff/Pretendard-Light.woff') format('woff');
-      }
-      @font-face {
-        font-family: 'Pretendard';
-        font-weight: 600;
-        font-display: swap;
-        src: local('Pretendard SemiBold'),
-          url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff2/Pretendard-SemiBold.woff2') format('woff2'),
-          url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/woff/Pretendard-SemiBold.woff') format('woff');
-      }
-      * {
-        font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
-          Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic',
-          sans-serif;
-      }
+      ${getCss()}
       body {
         text-align: center;
         margin: 0;

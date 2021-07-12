@@ -1,10 +1,16 @@
-import { useObject, baseURL, useToast } from 'services'
-import { ReSEO, ReInput, ReListbox, ReFooter, ReTemplate } from 'components'
+import { useObject, baseURL } from 'services'
+import {
+  ReSEO,
+  ReInput,
+  ReListbox,
+  ReFooter,
+  ReTemplate,
+  ReCopyImage
+} from 'components'
 import queryString from 'query-string'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import classnames from 'classnames'
 import { ChangeEvent } from 'react'
 import { IItem } from 'types'
+import Link from 'next/link'
 
 interface State {
   t: string
@@ -24,7 +30,6 @@ const HomePage = () => {
     loading: false,
     m: { name: 'light' }
   })
-  const toast = useToast()
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     window.clearTimeout(timeout)
@@ -54,26 +59,11 @@ const HomePage = () => {
     <>
       <ReSEO />
       <div className="container px-4 sm:px-0 mx-auto my-4 max-w-3xl">
-        <div className="mb-4 cursor-pointer">
-          <CopyToClipboard
-            text={encodeURI(thumbnail)}
-            onCopy={() => toast.success('이미지 URL이 복사되었습니다.')}
-          >
-            <img
-              src={thumbnail}
-              alt="sign"
-              title="클릭해서 이미지 주소를 복사하세요."
-              onLoad={() => setState({ loading: false })}
-              className={classnames('shadow-md hover:shadow-lg', {
-                'blur-sm': loading,
-                'opacity-40': loading
-              })}
-              onError={() =>
-                toast.error('에러가 발생했습니다. 새로고침을 해주세요.')
-              }
-            />
-          </CopyToClipboard>
-        </div>
+        <ReCopyImage
+          url={thumbnail}
+          loading={loading}
+          onLoad={() => setState({ loading: false })}
+        />
         <div>
           <ReInput
             className="w-full"
@@ -105,7 +95,17 @@ const HomePage = () => {
           <ReTemplate link="http://localhost:3000/api/sign" />
           <ReTemplate link="http://localhost:3000/api/sign" />
           <ReTemplate link="http://localhost:3000/api/sign" />
+          <ReTemplate link="http://localhost:3000/api/sign" />
+          <ReTemplate link="http://localhost:3000/api/sign" />
+          <ReTemplate link="http://localhost:3000/api/sign" />
         </ul>
+        <div className="text-center mt-4">
+          <Link href="/templates">
+            <button className="bg-gradient-to-r from-green-400 to-blue-500 py-2 px-5 text-white font-semibold rounded-lg">
+              모든 템플릿
+            </button>
+          </Link>
+        </div>
       </div>
       <ReFooter />
     </>
