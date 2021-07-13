@@ -1,10 +1,11 @@
-import { ReNavigation, ReTemplate } from 'components'
+import { ReNavigation, ReSEO, ReTemplate } from 'components'
 
 interface State {}
 
 const TemplatesPage = () => {
   return (
-    <div>
+    <>
+      <ReSEO title="템플릿들" />
       <ReNavigation />
       <div className="container mx-auto">
         <div className="py-20">
@@ -13,7 +14,7 @@ const TemplatesPage = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

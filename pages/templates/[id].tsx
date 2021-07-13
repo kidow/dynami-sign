@@ -9,7 +9,7 @@ const TemplatePage = () => {
   const [{ loading }, setState] = useObject<State>({ loading: false })
   return (
     <>
-      <ReSEO />
+      <ReSEO title="템플릿" />
       <ReNavigation maxWidth="max-w-3xl" />
       <div className="container px-4 sm:px-0 mx-auto my-4 max-w-3xl">
         <ReCopyImage

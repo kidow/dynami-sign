@@ -20,7 +20,7 @@ const ReSEO: FunctionComponent<Props> = ({
   noSEO = false
 }) => {
   const { asPath } = useRouter()
-  const TITLE = title ? `${title} - DynamiSign` : 'DynamiSign'
+  const TITLE = title ? `${title} - 다이나미사인` : '다이나미사인'
   const URL = baseURL + decodeURI(asPath)
   if (ldJson) ldJson['@context'] = 'https://schema.org'
   if (noSEO)

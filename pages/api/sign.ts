@@ -6,6 +6,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const title = (req.query.t as string) || 'DynamiSign'
   const description = (req.query.d as string) || ''
   const theme = (req.query.m as Params['m']) || 'light'
+
   try {
     const html = getHtml({ t: title, d: description, m: theme })
     const file = await getScreenshot(html)
