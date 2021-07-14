@@ -22,6 +22,8 @@
     "react": "17.x",
     "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "17.x",
+    "react-lazy-load-image-component": "^1.5.1",
+    "react-spinners": "^0.11.0",
     "react-toast-notifications": "^2.4.4"
   },
   "devDependencies": {
@@ -30,6 +32,7 @@
     "@types/node": "^15.12.2",
     "@types/react": "^17.0.11",
     "@types/react-copy-to-clipboard": "^5.0.0",
+    "@types/react-lazy-load-image-component": "^1.5.2",
     "autoprefixer": "^10.2.6",
     "postcss": "^8.3.4",
     "tailwindcss": "^2.1.4",
