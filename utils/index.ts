@@ -40,7 +40,7 @@ const getPage = async () => {
   return _page
 }
 
-export const getScreenshot = async (html: string) => {
+export const getScreenshot = async (html: string, fileType?: Params['y']) => {
   try {
     const page = await getPage()
     await page.setViewport({ width: 1200, height: 600 })
@@ -61,14 +61,14 @@ export const getScreenshot = async (html: string) => {
         })
       ])
     })
-    const file = await page.screenshot({ type: 'png' })
+    const file = await page.screenshot({ type: fileType })
     return file
   } catch (err) {
     console.error(err)
   }
 }
 
-const getCss = () => {
+const getCss = (theme: Params['m']) => {
   return `
     @font-face {
       font-family: 'Pretendard';
@@ -90,11 +90,16 @@ const getCss = () => {
       font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
         Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic',
         sans-serif;
+      background: ${theme === 'light' ? '#fff' : '#181818'};
+      color: ${theme === 'light' ? '#121212' : '#c0c0c0'};
+    }
+    .title {
+      color: ${theme === 'light' ? '#121212' : '#fff'};
     }
   `
 }
 
-export const getHtml = (props?: Params) => {
+export const getHtml = (props?: Omit<Params, 'y'>) => {
   const title = props ? props.t : 'DynamiSign'
   const description = props
     ? props.d
@@ -105,7 +110,7 @@ export const getHtml = (props?: Params) => {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-      ${getCss()}
+      ${getCss(theme)}
       body {
         text-align: center;
         margin: 0;
@@ -114,7 +119,6 @@ export const getHtml = (props?: Params) => {
         align-items: center;
         height: 100vh;
         word-break: keep-all;
-        background: ${theme === 'light' ? '#fff' : '#181818'}
       }
       .container {
         padding: 4rem;
@@ -124,13 +128,11 @@ export const getHtml = (props?: Params) => {
       .title {
         font-size: 5rem;
         font-weight: bold;
-        color: ${theme === 'light' ? '#121212' : '#fff'};
         line-height: 1.2;
         margin-bottom: 3rem;
       }
       .description {
         font-size: 2.5rem;
-        color: ${theme === 'light' ? '#121212' : '#c0c0c0'};
         line-height: 1.5;
       }
     </style>

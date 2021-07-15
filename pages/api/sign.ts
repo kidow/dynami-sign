@@ -6,12 +6,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const title = (req.query.t as string) || 'DynamiSign'
   const description = (req.query.d as string) || ''
   const theme = (req.query.m as Params['m']) || 'light'
+  const fileType = (req.query.y as Params['y']) || 'png'
 
   try {
     const html = getHtml({ t: title, d: description, m: theme })
-    const file = await getScreenshot(html)
+    const file = await getScreenshot(html, fileType)
     res.statusCode = 200
-    res.setHeader('Content-Type', 'image/png')
+    res.setHeader('Content-Type', `image/${fileType}`)
     res.setHeader(
       'Cache-Control',
       'public, immutable, no-transform, s-maxage=31536000, max-age=31536000'

@@ -1,3 +1,5 @@
+import { ScreenshotOptions } from 'puppeteer-core'
+
 export interface Params {
   /**
    * title
@@ -11,6 +13,7 @@ export interface Params {
    * theme
    */
   m: 'dark' | 'light'
+  y: ScreenshotOptions['type']
 }
 
 export interface IItem {

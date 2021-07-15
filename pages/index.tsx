@@ -18,17 +18,20 @@ interface State {
   thumbnail: string
   loading: boolean
   m: IItem
+  y: IItem
 }
 let timeout = -1
 const theme: Array<IItem> = [{ name: 'light' }, { name: 'dark' }]
+const fileType: Array<IItem> = [{ name: 'png' }, { name: 'jpeg' }]
 
 const HomePage = () => {
-  const [{ t, d, thumbnail, loading, m }, setState] = useObject<State>({
+  const [{ t, d, thumbnail, loading, m, y }, setState] = useObject<State>({
     t: 'DynamiSign',
     d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
     thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
     loading: false,
-    m: { name: 'light' }
+    m: { name: 'light' },
+    y: { name: 'png' }
   })
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -53,6 +56,17 @@ const HomePage = () => {
       thumbnail: `${baseURL}/api/sign?${newURL}`,
       loading: true,
       m: { name }
+    })
+  }
+  const onFileTypeChange = ({ name }: IItem) => {
+    const url = new URL(thumbnail).search
+    const query = queryString.parse(url)
+    query['y'] = name
+    const newURL = queryString.stringify(query, { encode: false })
+    setState({
+      thumbnail: `${baseURL}/api/sign?${newURL}`,
+      loading: true,
+      y: { name }
     })
   }
   return (
@@ -85,6 +99,12 @@ const HomePage = () => {
           value={m}
           label="테마 (선택)"
           onChange={onThemeChange}
+        />
+        <ReListbox
+          list={fileType}
+          value={y}
+          label="파일 타입 (선택)"
+          onChange={onFileTypeChange}
         />
       </div>
       <div className="container mx-auto mt-20">

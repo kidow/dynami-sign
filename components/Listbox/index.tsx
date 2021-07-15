@@ -18,7 +18,7 @@ const ReListbox: FunctionComponent<Props> = ({
   label
 }) => {
   return (
-    <div className="w-72">
+    <div className="w-72 mb-4">
       <ReLabel>{label}</ReLabel>
       <Listbox value={value} onChange={onChange}>
         <div className="relative mt-1">
