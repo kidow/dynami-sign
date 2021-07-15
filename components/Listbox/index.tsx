@@ -38,14 +38,11 @@ const ReListbox: FunctionComponent<Props> = ({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="z-10 absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {list.map((item, i) => (
+              {list.map((item, key) => (
                 <Listbox.Option
-                  key={i}
+                  key={key}
                   value={item}
-                  className={({ active }) =>
-                    `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
-                      cursor-pointer select-none relative py-2 pl-10 pr-4`
-                  }
+                  className="cursor-pointer select-none relative py-2 pl-10 pr-4"
                 >
                   {({ selected, active }) => (
                     <>
@@ -57,12 +54,7 @@ const ReListbox: FunctionComponent<Props> = ({
                         {item.name}
                       </span>
                       {selected ? (
-                        <span
-                          className={`${
-                            active ? 'text-amber-600' : 'text-amber-600'
-                          }
-                                absolute inset-y-0 left-0 flex items-center pl-3`}
-                        >
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                           <CheckIcon className="w-5 h-5" aria-hidden="true" />
                         </span>
                       ) : null}

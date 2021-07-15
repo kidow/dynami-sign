@@ -30,8 +30,8 @@ const HomePage = () => {
     d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
     thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
     loading: false,
-    m: { name: 'light' },
-    y: { name: 'png' }
+    m: theme[0],
+    y: fileType[0]
   })
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -47,7 +47,8 @@ const HomePage = () => {
       [name]: value
     })
   }
-  const onThemeChange = ({ name }: IItem) => {
+  const onThemeChange = (target: IItem) => {
+    const { name } = target
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
     query['m'] = name
@@ -55,10 +56,11 @@ const HomePage = () => {
     setState({
       thumbnail: `${baseURL}/api/sign?${newURL}`,
       loading: true,
-      m: { name }
+      m: target
     })
   }
-  const onFileTypeChange = ({ name }: IItem) => {
+  const onFileTypeChange = (target: IItem) => {
+    const { name } = target
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
     query['y'] = name
@@ -66,7 +68,7 @@ const HomePage = () => {
     setState({
       thumbnail: `${baseURL}/api/sign?${newURL}`,
       loading: true,
-      y: { name }
+      y: target
     })
   }
   return (
