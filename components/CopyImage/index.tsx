@@ -27,7 +27,7 @@ const ReCopyImage: FunctionComponent<Props> = ({
           <ClipLoader size={48} color="rgb(209, 213, 219)" />
         </div>
       )}
-      {isLoading && <div className="h-96 bg-white shadow-md"></div>}
+      {isLoading && <div className="md:h-96 sm:h-44 bg-white shadow-md"></div>}
       <CopyToClipboard
         text={encodeURI(url)}
         onCopy={() => toast.success('이미지 URL이 복사되었습니다.')}
