@@ -113,10 +113,6 @@ const HomePage = () => {
           onChange={onFileTypeChange}
         />
       </div>
-      <input
-        type="checkbox"
-        onChange={(e) => setState({ isLoading: !isLoading })}
-      />
       {/* <div className="container mx-auto mt-20">
         <h1 className="text-2xl mb-4 font-bold">템플릿들</h1>
         <ul className="flex flex-wrap -mx-1 md:-mx-1.5">
