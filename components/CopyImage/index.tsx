@@ -28,7 +28,7 @@ const ReCopyImage: FunctionComponent<Props> = ({
         </div>
       )}
       {isLoading && (
-        <div className="md:h-96 sm:h-44 bg-gray-300 shadow-md animate-pulse"></div>
+        <div className="md:h-96 sm:h-44 bg-gray-200 shadow-md animate-pulse"></div>
       )}
       <CopyToClipboard
         text={encodeURI(url)}
