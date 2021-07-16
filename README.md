@@ -9,7 +9,7 @@ title과 description을 파라미터로 받으면, 그에 따라 이미지의 �
 
 ![eg](https://dynamisign.com/api/sign?d=%EC%A0%9C%EB%AA%A9%EC%9D%84%20t%EB%A1%9C,%20%EB%82%B4%EC%9A%A9%EC%9D%80%20d%EB%A1%9C%20%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0%EB%A5%BC%20%EC%A0%84%EB%8B%AC%ED%95%A9%EB%8B%88%EB%8B%A4.&t=%EB%8F%99%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%9D%98%20%EB%82%B4%EC%9A%A9%EC%9D%84%20%EB%B3%80%EA%B2%BD%ED%95%98%EB%8A%94%20%EB%B2%95)
 
-URL: [https://dynamisign.com/api/sign?d=%EC%A0%9C%EB%AA%A9%EC%9D%84%20t%EB%A1%9C,%20%EB%82%B4%EC%9A%A9%EC%9D%80%20d%EB%A1%9C%20%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0%EB%A5%BC%20%EC%A0%84%EB%8B%AC%ED%95%A9%EB%8B%88%EB%8B%A4.&t=%EB%8F%99%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%9D%98%20%EB%82%B4%EC%9A%A9%EC%9D%84%20%EB%B3%80%EA%B2%BD%ED%95%98%EB%8A%94%20%EB%B2%95](url)
+[URL](https://dynamisign.com/api/sign?d=%EC%A0%9C%EB%AA%A9%EC%9D%84%20t%EB%A1%9C,%20%EB%82%B4%EC%9A%A9%EC%9D%80%20d%EB%A1%9C%20%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0%EB%A5%BC%20%EC%A0%84%EB%8B%AC%ED%95%A9%EB%8B%88%EB%8B%A4.&t=%EB%8F%99%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%9D%98%20%EB%82%B4%EC%9A%A9%EC%9D%84%20%EB%B3%80%EA%B2%BD%ED%95%98%EB%8A%94%20%EB%B2%95)
 
 # 사용법
 
@@ -38,4 +38,4 @@ html meta tag 중 `og:image` 혹은 `twitter:image`를 속성값으로 주고 `c
 
 [https://github.com/vercel/og-image](https://github.com/vercel/og-image)
 
-Font: [https://github.com/orioncactus/pretendard](https://github.com/orioncactus/pretendard)
+폰트: [https://github.com/orioncactus/pretendard](https://github.com/orioncactus/pretendard)

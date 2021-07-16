@@ -8,10 +8,9 @@ import {
   ReCopyImage
 } from 'components'
 import queryString from 'query-string'
-import { ChangeEvent, useCallback, useEffect } from 'react'
+import { ChangeEvent, useEffect } from 'react'
 import { IItem } from 'types'
 import Link from 'next/link'
-import debounce from 'lodash.debounce'
 
 interface State {
   t: string
