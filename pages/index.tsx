@@ -1,4 +1,4 @@
-import { useObject, baseURL } from 'services'
+import { useObject, baseURL, useDebounce } from 'services'
 import {
   ReSEO,
   ReInput,
@@ -8,9 +8,10 @@ import {
   ReCopyImage
 } from 'components'
 import queryString from 'query-string'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useCallback, useEffect } from 'react'
 import { IItem } from 'types'
 import Link from 'next/link'
+import debounce from 'lodash.debounce'
 
 interface State {
   t: string
@@ -20,13 +21,14 @@ interface State {
   m: IItem
   y: IItem
   isUpdating: boolean
+  url: string
 }
 let timeout = -1
 const theme: Array<IItem> = [{ name: 'light' }, { name: 'dark' }]
 const fileType: Array<IItem> = [{ name: 'png' }, { name: 'jpeg' }]
 
 const HomePage = () => {
-  const [{ t, d, thumbnail, isLoading, m, y, isUpdating }, setState] =
+  const [{ t, d, thumbnail, isLoading, m, y, isUpdating, url }, setState] =
     useObject<State>({
       t: 'DynamiSign',
       d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
@@ -34,7 +36,8 @@ const HomePage = () => {
       isLoading: true,
       m: theme[0],
       y: fileType[0],
-      isUpdating: false
+      isUpdating: false,
+      url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`
     })
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -74,12 +77,16 @@ const HomePage = () => {
       y: target
     })
   }
+  const debouncedThumbnail: string = useDebounce<string>(thumbnail, 1000)
+  useEffect(() => {
+    setState({ url: debouncedThumbnail })
+  }, [debouncedThumbnail])
   return (
     <>
       <ReSEO />
       <div className="container px-4 sm:px-0 mx-auto my-4 max-w-3xl">
         <ReCopyImage
-          url={thumbnail}
+          url={url}
           isLoading={isLoading}
           onLoad={() => setState({ isUpdating: false, isLoading: false })}
           isUpdating={isUpdating}
