@@ -16,23 +16,26 @@ interface State {
   t: string
   d: string
   thumbnail: string
-  loading: boolean
+  isLoading: boolean
   m: IItem
   y: IItem
+  isUpdating: boolean
 }
 let timeout = -1
 const theme: Array<IItem> = [{ name: 'light' }, { name: 'dark' }]
 const fileType: Array<IItem> = [{ name: 'png' }, { name: 'jpeg' }]
 
 const HomePage = () => {
-  const [{ t, d, thumbnail, loading, m, y }, setState] = useObject<State>({
-    t: 'DynamiSign',
-    d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
-    thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
-    loading: false,
-    m: theme[0],
-    y: fileType[0]
-  })
+  const [{ t, d, thumbnail, isLoading, m, y, isUpdating }, setState] =
+    useObject<State>({
+      t: 'DynamiSign',
+      d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
+      thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
+      isLoading: true,
+      m: theme[0],
+      y: fileType[0],
+      isUpdating: false
+    })
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     window.clearTimeout(timeout)
@@ -43,7 +46,7 @@ const HomePage = () => {
     timeout = window.setTimeout(() => {}, 200)
     setState({
       thumbnail: `${baseURL}/api/sign?${newURL}`,
-      loading: true,
+      isUpdating: true,
       [name]: value
     })
   }
@@ -55,7 +58,7 @@ const HomePage = () => {
     const newURL = queryString.stringify(query, { encode: false })
     setState({
       thumbnail: `${baseURL}/api/sign?${newURL}`,
-      loading: true,
+      isUpdating: true,
       m: target
     })
   }
@@ -67,7 +70,7 @@ const HomePage = () => {
     const newURL = queryString.stringify(query, { encode: false })
     setState({
       thumbnail: `${baseURL}/api/sign?${newURL}`,
-      loading: true,
+      isUpdating: true,
       y: target
     })
   }
@@ -77,8 +80,9 @@ const HomePage = () => {
       <div className="container px-4 sm:px-0 mx-auto my-4 max-w-3xl">
         <ReCopyImage
           url={thumbnail}
-          loading={loading}
-          onLoad={() => setState({ loading: false })}
+          isLoading={isLoading}
+          onLoad={() => setState({ isUpdating: false, isLoading: false })}
+          isUpdating={isUpdating}
         />
         <div>
           <ReInput
@@ -109,6 +113,10 @@ const HomePage = () => {
           onChange={onFileTypeChange}
         />
       </div>
+      <input
+        type="checkbox"
+        onChange={(e) => setState({ isLoading: !isLoading })}
+      />
       {/* <div className="container mx-auto mt-20">
         <h1 className="text-2xl mb-4 font-bold">템플릿들</h1>
         <ul className="flex flex-wrap -mx-1 md:-mx-1.5">
