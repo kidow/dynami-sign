@@ -1,11 +1,19 @@
-import { useObject, baseURL, useDebounce } from 'services'
+import {
+  useObject,
+  baseURL,
+  useDebounce,
+  theme,
+  fileType,
+  toBase64
+} from 'services'
 import {
   ReSEO,
   ReInput,
   ReListbox,
   ReFooter,
   ReTemplate,
-  ReCopyImage
+  ReCopyImage,
+  ReLabel
 } from 'components'
 import queryString from 'query-string'
 import { ChangeEvent, useEffect } from 'react'
@@ -21,23 +29,38 @@ interface State {
   y: IItem
   isUpdating: boolean
   url: string
+  uploadFiles: File[]
+  base64Files: string[]
 }
 let timeout = -1
-const theme: Array<IItem> = [{ name: 'light' }, { name: 'dark' }]
-const fileType: Array<IItem> = [{ name: 'png' }, { name: 'jpeg' }]
 
 const HomePage = () => {
-  const [{ t, d, thumbnail, isLoading, m, y, isUpdating, url }, setState] =
-    useObject<State>({
-      t: 'DynamiSign',
-      d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
-      thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
-      isLoading: true,
-      m: theme[0],
-      y: fileType[0],
-      isUpdating: false,
-      url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`
-    })
+  const [
+    {
+      t,
+      d,
+      thumbnail,
+      isLoading,
+      m,
+      y,
+      isUpdating,
+      url,
+      uploadFiles,
+      base64Files
+    },
+    setState
+  ] = useObject<State>({
+    t: 'DynamiSign',
+    d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
+    thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
+    isLoading: true,
+    m: theme[0],
+    y: fileType[0],
+    isUpdating: false,
+    url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
+    uploadFiles: [],
+    base64Files: []
+  })
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     window.clearTimeout(timeout)
@@ -76,7 +99,24 @@ const HomePage = () => {
       y: target
     })
   }
-  const debouncedThumbnail: string = useDebounce<string>(thumbnail, 1000)
+  const onImageUpload = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.multiple = true
+    input.onchange = async () => {
+      if (!input.files || input.files.length > 3) return
+      const base64Files: string[] = []
+      const arrayFiles = Array.from(input.files)
+      for (let i = 0; i < arrayFiles.length; i++) {
+        let base64file = await toBase64(arrayFiles[i])
+        base64Files.push(base64file)
+      }
+      setState({ base64Files, uploadFiles: arrayFiles })
+    }
+    input.click()
+  }
+  const debouncedThumbnail = useDebounce<string>(thumbnail, 1000)
   useEffect(() => {
     setState({ url: debouncedThumbnail })
   }, [debouncedThumbnail])
@@ -118,6 +158,29 @@ const HomePage = () => {
           label="파일 타입 (선택)"
           onChange={onFileTypeChange}
         />
+        {/* <div>
+          <ReLabel>이미지 (최대 3개)</ReLabel>
+          {!!base64Files.length && (
+            <div className="flex my-2">
+              {base64Files.map((item, key) => (
+                <img key={key} src={item} className="mr-3 h-24" />
+              ))}
+            </div>
+          )}
+          <div className="flex">
+            <button
+              onClick={onImageUpload}
+              className="px-3 py-2 bg-white shadow-md text-sm rounded-lg"
+            >
+              {`${!!base64Files && '재'}업로드`}
+            </button>
+            {!!base64Files.length && (
+              <button className="ml-2 px-3 py-2 bg-white shadow-md text-sm rounded-lg">
+                반영
+              </button>
+            )}
+          </div>
+        </div> */}
       </div>
       {/* <div className="container mx-auto mt-20">
         <h1 className="text-2xl mb-4 font-bold">템플릿들</h1>
