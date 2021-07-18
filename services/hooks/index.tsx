@@ -1,5 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { useToasts } from 'react-toast-notifications'
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { authState } from 'store'
 
 export function useObject<T>(
   initialObject: T
@@ -57,4 +59,11 @@ export function useDebounce<T>(value: T, delay: number): T {
     }
   }, [value, delay])
   return debouncedValue
+}
+
+export const useUser = () => {
+  const user = useRecoilValue(authState)
+  const setUser = useSetRecoilState(authState)
+  const resetUser = useResetRecoilState(authState)
+  return { user, setUser, resetUser }
 }

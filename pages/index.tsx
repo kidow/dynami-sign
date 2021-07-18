@@ -16,7 +16,8 @@ import {
   ReTemplate,
   ReCopyImage,
   ReLabel,
-  ReModal
+  ReModal,
+  ReProfile
 } from 'components'
 import queryString from 'query-string'
 import { ChangeEvent, useEffect } from 'react'
@@ -24,6 +25,7 @@ import { IItem } from 'types'
 import Link from 'next/link'
 import { AiFillGithub } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
+import { authState } from 'store'
 
 interface State {
   t: string
@@ -59,12 +61,12 @@ const HomePage = () => {
   ] = useObject<State>({
     t: '다이나미사인',
     d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
-    thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=https://raw.githubusercontent.com/kidow/dynami-sign/cb400c00901b54c282a9a1dd66b89aa87c5c3680/public/media/logo-initial.svg`,
+    thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=${basicImage}`,
     isLoading: true,
     m: theme[0],
     y: fileType[0],
     isUpdating: false,
-    url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=https://raw.githubusercontent.com/kidow/dynami-sign/cb400c00901b54c282a9a1dd66b89aa87c5c3680/public/media/logo-initial.svg`,
+    url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=${basicImage}`,
     uploadFiles: [],
     base64Files: [basicImage],
     isOpen: false
@@ -131,13 +133,11 @@ const HomePage = () => {
     setState({ isOpen: true })
   }
   const onSignIn = async (provider: 'github' | 'google') => {
-    try {
-      const result = await supabase.auth.signIn({
-        provider
-      })
-      console.log('result', result)
-    } catch (err) {
-      console.log(err)
+    const { user, error } = await supabase.auth.signIn({
+      provider
+    })
+    if (error) {
+      console.error(error)
     }
   }
   const debouncedThumbnail = useDebounce<string>(thumbnail, 1000)
@@ -147,7 +147,7 @@ const HomePage = () => {
   return (
     <>
       <ReSEO />
-      <div className="container px-4 sm:px-0 mx-auto my-4 max-w-3xl">
+      <div className="container px-4 sm:px-0 mx-auto py-4 mb-4 max-w-3xl">
         <ReCopyImage
           url={url}
           isLoading={isLoading}
@@ -262,6 +262,7 @@ const HomePage = () => {
           </div>
         </div>
       </ReModal>
+      <ReProfile />
     </>
   )
 }

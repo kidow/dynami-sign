@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 import Head from 'next/head'
 
 interface Props {}

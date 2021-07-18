@@ -1,8 +1,9 @@
 import 'styles/globals.css'
 import App from 'next/app'
 import { ErrorInfo } from 'react'
-import { ReAnalytics } from 'components'
+import { ReAnalytics, ReAuth } from 'components'
 import { ToastProvider } from 'react-toast-notifications'
+import { RecoilRoot } from 'recoil'
 
 interface Props {}
 interface State {
@@ -24,9 +25,13 @@ class MyApp extends App<Props, {}, State> {
     const { Component, pageProps } = this.props
     return (
       <ReAnalytics>
-        <ToastProvider autoDismiss placement="top-center">
-          <Component {...pageProps} />
-        </ToastProvider>
+        <RecoilRoot>
+          <ToastProvider autoDismiss placement="top-center">
+            <ReAuth>
+              <Component {...pageProps} />
+            </ReAuth>
+          </ToastProvider>
+        </RecoilRoot>
       </ReAnalytics>
     )
   }
