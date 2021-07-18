@@ -133,7 +133,7 @@ export const getHtml = (props?: Omit<Params, 'y'>) => {
         margin-bottom: 1.8rem;
       }
       .description {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         line-height: 1.5;
       }
       .images {
@@ -151,20 +151,13 @@ export const getHtml = (props?: Omit<Params, 'y'>) => {
     <body>
       <div class="container">
         ${
-          images.length &&
-          `
-        <div class="images">
+          !!images.length
+            ? `<div class="images">
           ${images.map(
-            (item, key) => `
-          <img
-            key=${key}
-            src=${item}
-            alt=${`i${key}`}
-          />
+            (url, key) => `<img key=${key} src=${url} alt=${key}/>
           `
-          )}
-        </div>
-        `
+          )}</div>`
+            : ''
         }
         <div class="title">${title}</div>
         <div class="description">

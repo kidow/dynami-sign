@@ -6,7 +6,9 @@ import {
   fileType,
   toBase64,
   basicImage,
-  supabase
+  supabase,
+  useUser,
+  useToast
 } from 'services'
 import {
   ReSEO,
@@ -39,6 +41,7 @@ interface State {
   uploadFiles: File[]
   base64Files: string[]
   isOpen: boolean
+  isUploading: boolean
 }
 let timeout = -1
 
@@ -69,8 +72,11 @@ const HomePage = () => {
     url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=${basicImage}`,
     uploadFiles: [],
     base64Files: [basicImage],
-    isOpen: false
+    isOpen: false,
+    isUploading: false
   })
+  const { user } = useUser()
+  const toast = useToast()
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     window.clearTimeout(timeout)
@@ -110,12 +116,20 @@ const HomePage = () => {
     })
   }
   const onImageUpload = () => {
+    if (!user) {
+      setState({ isOpen: true })
+      return
+    }
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/*'
     input.multiple = true
     input.onchange = async () => {
-      if (!input.files || input.files.length > 3) return
+      if (!input.files) return
+      if (input.files.length > 3) {
+        toast.warning('이미지는 최대 3개입니다.')
+        return
+      }
       const base64Files: string[] = []
       const arrayFiles = Array.from(input.files)
       for (let i = 0; i < arrayFiles.length; i++) {
@@ -126,14 +140,49 @@ const HomePage = () => {
     }
     input.click()
   }
-  const onApplyImages = () => {}
+  const onApplyImages = async () => {
+    if (!confirm('반영하시겠습니까?')) return
+    setState({ isUpdating: true })
+    const imageUrls: string[] = []
+    for (let i = 0; i < uploadFiles.length; i++) {
+      let file = uploadFiles[i]
+      const { error } = await supabase.storage
+        .from('uploads')
+        .upload(file.name, file)
+      const { publicURL } = supabase.storage
+        .from('uploads')
+        .getPublicUrl(file.name)
+      if (publicURL) imageUrls.push(encodeURI(publicURL))
+      if (error) {
+        console.error(error)
+        return
+      }
+    }
+    const url = new URL(thumbnail).search
+    const query = queryString.parse(url)
+    query['i'] = imageUrls
+    const newURL = queryString.stringify(query, { encode: false })
+    setState({
+      isUploading: false,
+      isUpdating: true,
+      thumbnail: `${baseURL}/api/sign?${newURL}`,
+      uploadFiles: []
+    })
+  }
   const onClearImages = () => {
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
-    setState({ isOpen: true })
+    delete query['i']
+    const newURL = queryString.stringify(query, { encode: false })
+    setState({
+      uploadFiles: [],
+      base64Files: [],
+      isUpdating: true,
+      thumbnail: `${baseURL}/api/sign?${newURL}`
+    })
   }
   const onSignIn = async (provider: 'github' | 'google') => {
-    const { user, error } = await supabase.auth.signIn({
+    const { error } = await supabase.auth.signIn({
       provider
     })
     if (error) {
