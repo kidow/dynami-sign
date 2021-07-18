@@ -58,7 +58,8 @@ const HomePage = () => {
       url,
       uploadFiles,
       base64Files,
-      isOpen
+      isOpen,
+      isUploading
     },
     setState
   ] = useObject<State>({
@@ -142,6 +143,8 @@ const HomePage = () => {
   }
   const onApplyImages = async () => {
     if (!confirm('반영하시겠습니까?')) return
+    if (isUploading) return
+
     setState({ isUpdating: true })
     const imageUrls: string[] = []
     for (let i = 0; i < uploadFiles.length; i++) {
