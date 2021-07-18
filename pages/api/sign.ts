@@ -3,7 +3,6 @@ import { Params } from 'types'
 import { getHtml, getScreenshot } from 'utils'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('req.query', req.query)
   const title = (req.query.t as string) || '다이나미사인'
   const description = (req.query.d as string) || ''
   const theme = (req.query.m as Params['m']) || 'light'

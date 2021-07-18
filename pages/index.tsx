@@ -14,12 +14,15 @@ import {
   ReFooter,
   ReTemplate,
   ReCopyImage,
-  ReLabel
+  ReLabel,
+  ReModal
 } from 'components'
 import queryString from 'query-string'
 import { ChangeEvent, useEffect } from 'react'
 import { IItem } from 'types'
 import Link from 'next/link'
+import { AiFillGithub } from 'react-icons/ai'
+import { FcGoogle } from 'react-icons/fc'
 
 interface State {
   t: string
@@ -32,6 +35,7 @@ interface State {
   url: string
   uploadFiles: File[]
   base64Files: string[]
+  isOpen: boolean
 }
 let timeout = -1
 
@@ -47,7 +51,8 @@ const HomePage = () => {
       isUpdating,
       url,
       uploadFiles,
-      base64Files
+      base64Files,
+      isOpen
     },
     setState
   ] = useObject<State>({
@@ -60,7 +65,8 @@ const HomePage = () => {
     isUpdating: false,
     url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=https://raw.githubusercontent.com/kidow/dynami-sign/cb400c00901b54c282a9a1dd66b89aa87c5c3680/public/media/logo-initial.svg`,
     uploadFiles: [],
-    base64Files: [basicImage]
+    base64Files: [basicImage],
+    isOpen: false
   })
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -121,7 +127,9 @@ const HomePage = () => {
   const onClearImages = () => {
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
+    setState({ isOpen: true })
   }
+  const onSignIn = (provider: 'github' | 'google') => {}
   const debouncedThumbnail = useDebounce<string>(thumbnail, 1000)
   useEffect(() => {
     setState({ url: debouncedThumbnail })
@@ -220,6 +228,30 @@ const HomePage = () => {
         </div>
       </div> */}
       <ReFooter />
+
+      <ReModal isOpen={isOpen} onClose={() => setState({ isOpen: false })}>
+        <div className="text-center">
+          <div className="text-lg">
+            로그인 시 <b>이미지 업로드</b>가 가능합니다.
+          </div>
+          <div className="border-t bg-gray-400 my-4" />
+          <div className="flex items-center">
+            <button
+              onClick={() => onSignIn('github')}
+              className="text-center flex-1 flex justify-center border border-gray-200 rounded-md py-1"
+            >
+              <AiFillGithub className="w-7 h-7" />
+            </button>
+            <div className="px-2" />
+            <button
+              onClick={() => onSignIn('google')}
+              className="text-center flex-1 flex justify-center border border-gray-200 rounded-md py-1"
+            >
+              <FcGoogle className="w-7 h-7" />
+            </button>
+          </div>
+        </div>
+      </ReModal>
     </>
   )
 }
