@@ -5,7 +5,8 @@ import {
   theme,
   fileType,
   toBase64,
-  basicImage
+  basicImage,
+  supabase
 } from 'services'
 import {
   ReSEO,
@@ -129,7 +130,16 @@ const HomePage = () => {
     const query = queryString.parse(url)
     setState({ isOpen: true })
   }
-  const onSignIn = (provider: 'github' | 'google') => {}
+  const onSignIn = async (provider: 'github' | 'google') => {
+    try {
+      const result = await supabase.auth.signIn({
+        provider
+      })
+      console.log('result', result)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   const debouncedThumbnail = useDebounce<string>(thumbnail, 1000)
   useEffect(() => {
     setState({ url: debouncedThumbnail })
