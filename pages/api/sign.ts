@@ -3,13 +3,15 @@ import { Params } from 'types'
 import { getHtml, getScreenshot } from 'utils'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const title = (req.query.t as string) || 'DynamiSign'
+  console.log('req.query', req.query)
+  const title = (req.query.t as string) || '다이나미사인'
   const description = (req.query.d as string) || ''
   const theme = (req.query.m as Params['m']) || 'light'
   const fileType = (req.query.y as Params['y']) || 'png'
-
+  let images = (req.query.i as Params['i']) || []
+  if (typeof images === 'string') images = [images]
   try {
-    const html = getHtml({ t: title, d: description, m: theme })
+    const html = getHtml({ t: title, d: description, m: theme, i: images })
     const file = await getScreenshot(html, fileType)
     res.statusCode = 200
     res.setHeader('Content-Type', `image/${fileType}`)

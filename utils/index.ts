@@ -100,11 +100,12 @@ const getCss = (theme: Params['m']) => {
 }
 
 export const getHtml = (props?: Omit<Params, 'y'>) => {
-  const title = props ? props.t : 'DynamiSign'
+  const title = props ? props.t : '다이나미사인'
   const description = props
     ? props.d
     : '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.'
   const theme = props ? props.m : 'light'
+  const images = props ? props.i : []
   return `<!DOCTYPE html>
   <html>
     <meta charset="utf-8" />
@@ -129,15 +130,42 @@ export const getHtml = (props?: Omit<Params, 'y'>) => {
         font-size: 5rem;
         font-weight: bold;
         line-height: 1.2;
-        margin-bottom: 3rem;
+        margin-bottom: 1.8rem;
       }
       .description {
         font-size: 2.5rem;
         line-height: 1.5;
       }
+      .images {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2.2rem;
+      }
+      .images img {
+        height: 100px;
+      }
+      .images img + img {
+        margin-left: 1rem;
+      }
     </style>
     <body>
       <div class="container">
+        ${
+          images.length &&
+          `
+        <div class="images">
+          ${images.map(
+            (item, key) => `
+          <img
+            key=${key}
+            src=${item}
+            alt=${`i${key}`}
+          />
+          `
+          )}
+        </div>
+        `
+        }
         <div class="title">${title}</div>
         <div class="description">
           ${description}

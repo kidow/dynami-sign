@@ -4,7 +4,8 @@ import {
   useDebounce,
   theme,
   fileType,
-  toBase64
+  toBase64,
+  basicImage
 } from 'services'
 import {
   ReSEO,
@@ -50,16 +51,16 @@ const HomePage = () => {
     },
     setState
   ] = useObject<State>({
-    t: 'DynamiSign',
+    t: '다이나미사인',
     d: '이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.',
-    thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
+    thumbnail: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=https://raw.githubusercontent.com/kidow/dynami-sign/cb400c00901b54c282a9a1dd66b89aa87c5c3680/public/media/logo-initial.svg`,
     isLoading: true,
     m: theme[0],
     y: fileType[0],
     isUpdating: false,
-    url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.`,
+    url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=https://raw.githubusercontent.com/kidow/dynami-sign/cb400c00901b54c282a9a1dd66b89aa87c5c3680/public/media/logo-initial.svg`,
     uploadFiles: [],
-    base64Files: []
+    base64Files: [basicImage]
   })
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -116,6 +117,11 @@ const HomePage = () => {
     }
     input.click()
   }
+  const onApplyImages = () => {}
+  const onClearImages = () => {
+    const url = new URL(thumbnail).search
+    const query = queryString.parse(url)
+  }
   const debouncedThumbnail = useDebounce<string>(thumbnail, 1000)
   useEffect(() => {
     setState({ url: debouncedThumbnail })
@@ -158,7 +164,7 @@ const HomePage = () => {
           label="파일 타입 (선택)"
           onChange={onFileTypeChange}
         />
-        {/* <div>
+        <div>
           <ReLabel>이미지 (최대 3개)</ReLabel>
           {!!base64Files.length && (
             <div className="flex my-2">
@@ -170,17 +176,28 @@ const HomePage = () => {
           <div className="flex">
             <button
               onClick={onImageUpload}
-              className="px-3 py-2 bg-white shadow-md text-sm rounded-lg"
+              className="px-3 py-2 bg-white shadow-sm text-sm rounded-lg"
             >
-              {`${!!base64Files && '재'}업로드`}
+              업로드
             </button>
-            {!!base64Files.length && (
-              <button className="ml-2 px-3 py-2 bg-white shadow-md text-sm rounded-lg">
+            {!!uploadFiles.length && (
+              <button
+                onClick={onApplyImages}
+                className="ml-2 px-3 py-2 bg-white shadow-sm text-sm rounded-lg"
+              >
                 반영
               </button>
             )}
+            {!!base64Files.length && (
+              <button
+                className="ml-2 px-3 py-2 bg-white shadow-sm text-sm rounded-lg"
+                onClick={onClearImages}
+              >
+                제거
+              </button>
+            )}
           </div>
-        </div> */}
+        </div>
       </div>
       {/* <div className="container mx-auto mt-20">
         <h1 className="text-2xl mb-4 font-bold">템플릿들</h1>

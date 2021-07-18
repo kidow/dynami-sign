@@ -14,6 +14,7 @@ export interface Params {
    */
   m: 'dark' | 'light'
   y: ScreenshotOptions['type']
+  i: string[]
 }
 
 export interface IItem {
