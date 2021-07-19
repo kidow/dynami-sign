@@ -41,3 +41,8 @@ export type MaxWidth =
   | 'max-w-md'
   | 'max-w-sm'
   | 'max-w-xs'
+
+export interface IModal {
+  isOpen: boolean
+  onClose: () => void
+}

@@ -10,7 +10,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   let images = (req.query.i as Params['i']) || []
   if (typeof images === 'string') images = [images]
   try {
-    const html = getHtml({ t: title, d: description, m: theme, i: images })
+    const html = getHtml({
+      t: title,
+      d: description,
+      m: theme,
+      i: images.map((item) => encodeURI(item))
+    })
     const file = await getScreenshot(html, fileType)
     res.statusCode = 200
     res.setHeader('Content-Type', `image/${fileType}`)

@@ -1,9 +1,7 @@
 import { FunctionComponent } from 'react'
+import { IModal } from 'types'
 
-interface Props {
-  isOpen: boolean
-  onClose: () => void
-}
+interface Props extends IModal {}
 interface State {}
 
 const ReModal: FunctionComponent<Props> = ({ isOpen, onClose, children }) => {

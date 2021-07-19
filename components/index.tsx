@@ -10,3 +10,7 @@ export { default as ReCopyImage } from './CopyImage'
 export { default as ReModal } from './Modal'
 export { default as ReAuth } from './Auth'
 export { default as ReProfile } from './Profile'
+
+// Modal
+export { default as ReLoginModal } from './Modal/Login'
+export { default as ReSelectImageModal } from './Modal/SelectImage'

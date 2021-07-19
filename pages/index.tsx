@@ -18,16 +18,15 @@ import {
   ReTemplate,
   ReCopyImage,
   ReLabel,
-  ReModal,
-  ReProfile
+  ReProfile,
+  ReLoginModal,
+  ReSelectImageModal
 } from 'components'
 import queryString from 'query-string'
 import { ChangeEvent, useEffect } from 'react'
 import { IItem, TUpload } from 'types'
 import Link from 'next/link'
-import { AiFillGithub } from 'react-icons/ai'
-import { FcGoogle } from 'react-icons/fc'
-import { authState } from 'store'
+import { imageState } from 'store'
 
 interface State {
   t: string
@@ -40,8 +39,9 @@ interface State {
   url: string
   uploadFiles: File[]
   base64Files: string[]
-  isOpen: boolean
+  isLoginOpen: boolean
   isUploading: boolean
+  isChooseImageOpen: boolean
 }
 let timeout = -1
 
@@ -58,8 +58,9 @@ const HomePage = () => {
       url,
       uploadFiles,
       base64Files,
-      isOpen,
-      isUploading
+      isLoginOpen,
+      isUploading,
+      isChooseImageOpen
     },
     setState
   ] = useObject<State>({
@@ -73,8 +74,9 @@ const HomePage = () => {
     url: `${baseURL}/api/sign?d=이미지를 동적으로 만들어 주는 서비스입니다. 이미지 클릭 시 주소가 복사됩니다.&i=${basicImage}`,
     uploadFiles: [],
     base64Files: [basicImage],
-    isOpen: false,
-    isUploading: false
+    isLoginOpen: false,
+    isUploading: false,
+    isChooseImageOpen: false
   })
   const { user } = useUser()
   const toast = useToast()
@@ -118,7 +120,7 @@ const HomePage = () => {
   }
   const onImageUpload = () => {
     if (!user) {
-      setState({ isOpen: true })
+      setState({ isLoginOpen: true })
       return
     }
     const input = document.createElement('input')
@@ -133,6 +135,10 @@ const HomePage = () => {
       }
       const base64Files: string[] = []
       const arrayFiles = Array.from(input.files)
+      if (arrayFiles.some((file) => file.size > 1024 * 1024 * 10)) {
+        toast.warning('10MB 이하의 이미지만 가능합니다.')
+        return
+      }
       for (let i = 0; i < arrayFiles.length; i++) {
         let base64file = await toBase64(arrayFiles[i])
         base64Files.push(base64file)
@@ -149,26 +155,29 @@ const HomePage = () => {
     const imageUrls: string[] = []
     for (let i = 0; i < uploadFiles.length; i++) {
       let file = uploadFiles[i]
-      const { error } = await supabase.storage
+      let fileName = new Date().getTime().toString()
+      const upload = await supabase.storage
         .from('uploads')
-        .upload(file.name, file)
-      if (error) {
-        console.error('upload error', error)
+        .upload(fileName, file)
+      if (upload.error) {
+        console.error('upload error', upload.error)
         return
       }
       const { publicURL } = supabase.storage
         .from('uploads')
-        .getPublicUrl(file.name)
+        .getPublicUrl(fileName)
       if (publicURL) imageUrls.push(encodeURI(publicURL))
     }
-    const { error } = await supabase.from<TUpload>('uploads').insert({
-      user_id: user!.id,
-      email: user!.email,
-      file_name: uploadFiles.map((file) => file.name),
-      image_url: imageUrls
-    })
-    if (error) {
-      console.error('insert error', error)
+    const insert = await supabase.from<TUpload>('uploads').insert(
+      Array.from({ length: uploadFiles.length }, (_, i) => ({
+        user_id: user!.id,
+        email: user!.email,
+        file_name: uploadFiles[i].name,
+        image_url: imageUrls[i]
+      }))
+    )
+    if (insert.error) {
+      console.error('insert error', insert.error)
       return
     }
     const url = new URL(thumbnail).search
@@ -194,13 +203,18 @@ const HomePage = () => {
       thumbnail: `${baseURL}/api/sign?${newURL}`
     })
   }
-  const onSignIn = async (provider: 'github' | 'google') => {
-    const { error } = await supabase.auth.signIn({
-      provider
+  const onSelectImage = (selectedImages: string[]) => {
+    const url = new URL(thumbnail).search
+    const query = queryString.parse(url)
+    query['i'] = selectedImages
+    const newURL = queryString.stringify(query, { encode: false })
+    setState({
+      isUploading: false,
+      isUpdating: true,
+      thumbnail: `${baseURL}/api/sign?${newURL}`,
+      uploadFiles: [],
+      isChooseImageOpen: false
     })
-    if (error) {
-      console.error(error)
-    }
   }
   const debouncedThumbnail = useDebounce<string>(thumbnail, 1000)
   useEffect(() => {
@@ -245,7 +259,15 @@ const HomePage = () => {
           onChange={onFileTypeChange}
         />
         <div>
-          <ReLabel>이미지 (최대 3개)</ReLabel>
+          <ReLabel>
+            이미지 (최대 3개)
+            <span
+              onClick={() => setState({ isChooseImageOpen: true })}
+              className="text-gray-400 cursor-pointer ml-1"
+            >
+              선택
+            </span>
+          </ReLabel>
           {!!base64Files.length && (
             <div className="flex my-2">
               {base64Files.map((item, key) => (
@@ -279,8 +301,8 @@ const HomePage = () => {
                       cy="12"
                       r="10"
                       stroke="currentColor"
-                      stroke-width="4"
-                    ></circle>
+                      strokeWidth="4"
+                    />
                     <path
                       className="opacity-75"
                       fill="currentColor"
@@ -324,34 +346,15 @@ const HomePage = () => {
       </div> */}
       <ReFooter />
 
-      <ReModal isOpen={isOpen} onClose={() => setState({ isOpen: false })}>
-        <div className="text-center">
-          <div className="text-lg">
-            로그인 시 <b>이미지 업로드</b>가 가능합니다.
-          </div>
-          <div className="border-t bg-gray-400 my-4" />
-          <div className="flex items-center">
-            <button
-              onClick={() => onSignIn('github')}
-              className="text-center flex-1 flex justify-center border border-gray-200 rounded-md py-1"
-            >
-              <AiFillGithub className="w-7 h-7" />
-            </button>
-            <div className="px-2" />
-            <button
-              onClick={() => onSignIn('google')}
-              className="text-center flex-1 flex justify-center border border-gray-200 rounded-md py-1"
-            >
-              <FcGoogle className="w-7 h-7" />
-            </button>
-          </div>
-          <div className="mt-4 text-sm">
-            <a href="/privacy" target="_blank" rel="noopener noreferrer">
-              개인정보처리방침
-            </a>
-          </div>
-        </div>
-      </ReModal>
+      <ReLoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setState({ isLoginOpen: false })}
+      />
+      <ReSelectImageModal
+        isOpen={isChooseImageOpen}
+        onClose={() => setState({ isChooseImageOpen: false })}
+        onSelect={onSelectImage}
+      />
       <ReProfile />
     </>
   )
