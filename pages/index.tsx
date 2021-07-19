@@ -23,7 +23,7 @@ import {
 } from 'components'
 import queryString from 'query-string'
 import { ChangeEvent, useEffect } from 'react'
-import { IItem } from 'types'
+import { IItem, TUpload } from 'types'
 import Link from 'next/link'
 import { AiFillGithub } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
@@ -145,21 +145,31 @@ const HomePage = () => {
     if (!confirm('반영하시겠습니까?')) return
     if (isUploading) return
 
-    setState({ isUpdating: true })
+    setState({ isUploading: true })
     const imageUrls: string[] = []
     for (let i = 0; i < uploadFiles.length; i++) {
       let file = uploadFiles[i]
       const { error } = await supabase.storage
         .from('uploads')
         .upload(file.name, file)
+      if (error) {
+        console.error('upload error', error)
+        return
+      }
       const { publicURL } = supabase.storage
         .from('uploads')
         .getPublicUrl(file.name)
       if (publicURL) imageUrls.push(encodeURI(publicURL))
-      if (error) {
-        console.error(error)
-        return
-      }
+    }
+    const { error } = await supabase.from<TUpload>('uploads').insert({
+      user_id: user!.id,
+      email: user!.email,
+      file_name: uploadFiles.map((file) => file.name),
+      image_url: imageUrls
+    })
+    if (error) {
+      console.error('insert error', error)
+      return
     }
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
@@ -199,7 +209,7 @@ const HomePage = () => {
   return (
     <>
       <ReSEO />
-      <div className="container px-4 sm:px-0 mx-auto py-4 mb-4 max-w-3xl">
+      <div className="container px-4 sm:px-0 mx-auto py-4 mb-4 max-w-3xl min-h-screen">
         <ReCopyImage
           url={url}
           isLoading={isLoading}
@@ -253,8 +263,31 @@ const HomePage = () => {
             {!!uploadFiles.length && (
               <button
                 onClick={onApplyImages}
-                className="ml-2 px-3 py-2 bg-white shadow-sm text-sm rounded-lg"
+                className="ml-2 px-3 py-2 bg-white shadow-sm text-sm rounded-lg inline-flex"
+                disabled={isUploading}
               >
+                {!!isUploading && (
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                )}
                 반영
               </button>
             )}
@@ -311,6 +344,11 @@ const HomePage = () => {
             >
               <FcGoogle className="w-7 h-7" />
             </button>
+          </div>
+          <div className="mt-4 text-sm">
+            <a href="/privacy" target="_blank" rel="noopener noreferrer">
+              개인정보처리방침
+            </a>
           </div>
         </div>
       </ReModal>

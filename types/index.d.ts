@@ -1,4 +1,5 @@
 import { ScreenshotOptions } from 'puppeteer-core'
+export * from './table'
 
 export interface Params {
   /**
