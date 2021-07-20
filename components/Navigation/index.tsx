@@ -9,7 +9,7 @@ interface State {}
 
 const ReNavigation: FunctionComponent<Props> = ({ maxWidth = 'container' }) => {
   return (
-    <nav className="sticky top-0 border-b border-gray-100 shadow-sm">
+    <nav className="sticky top-0 border-b border-gray-100 shadow-sm bg-gray-100 z-10">
       <div className={`mx-auto px-4 h-12 flex items-center ${maxWidth}`}>
         <div>
           <Link href="/">
