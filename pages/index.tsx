@@ -210,11 +210,11 @@ const HomePage = () => {
       thumbnail: `${baseURL}/api/sign?${newURL}`
     })
   }
-  const onSelectImage = (selectIds: string[]) => {
+  const onSelectImage = (selectImages: string[]) => {
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
     if (query['i']) delete query['i']
-    query['i'] = selectIds.map((id) => shortUrl(id))
+    query['i'] = selectImages
     const newURL = queryString.stringify(query, { encode: false })
     setState({
       isUploading: false,
@@ -228,9 +228,6 @@ const HomePage = () => {
   useEffect(() => {
     setState({ url: debouncedThumbnail })
   }, [debouncedThumbnail])
-  useEffect(() => {
-    console.log('thumbnail', thumbnail)
-  }, [thumbnail])
   return (
     <>
       <ReSEO />

@@ -59,7 +59,7 @@ const ReChooseImageModal: FunctionComponent<Props> = ({
     const result = selectedImages
     const i = selectedImages.findIndex((url) => url === images[index].image_url)
     if (i !== -1) result.splice(i, 1)
-    else result.push(images[index].short_id)
+    else result.push(images[index].image_url)
     setState({ selectedImages: result })
   }
   useEffect(() => {
