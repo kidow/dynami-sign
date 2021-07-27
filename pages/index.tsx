@@ -27,6 +27,7 @@ import { ChangeEvent, useEffect } from 'react'
 import { IItem, TUpload } from 'types'
 import Link from 'next/link'
 import { imageState } from 'store'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 interface State {
   t: string
@@ -80,6 +81,8 @@ const HomePage = () => {
   })
   const { user } = useUser()
   const toast = useToast()
+  const images = useRecoilValue(imageState)
+  const setImage = useSetRecoilState(imageState)
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     window.clearTimeout(timeout)
@@ -190,6 +193,7 @@ const HomePage = () => {
       thumbnail: `${baseURL}/api/sign?${newURL}`,
       uploadFiles: []
     })
+    setImage(images.map((item) => ({ ...item, selected: false })))
   }
   const onClearImages = () => {
     const url = new URL(thumbnail).search
