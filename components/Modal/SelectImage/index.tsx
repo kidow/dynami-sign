@@ -30,7 +30,7 @@ const ReChooseImageModal: FunctionComponent<Props> = ({
 
     const { data, error } = await supabase
       .from<TUpload>('uploads')
-      .select(`image_url, user_id`)
+      .select(`image_url, user_id, short_id`)
     if (error) {
       console.error(error)
       return
@@ -59,7 +59,7 @@ const ReChooseImageModal: FunctionComponent<Props> = ({
     const result = selectedImages
     const i = selectedImages.findIndex((url) => url === images[index].image_url)
     if (i !== -1) result.splice(i, 1)
-    else result.push(images[index].image_url)
+    else result.push(images[index].short_id)
     setState({ selectedImages: result })
   }
   useEffect(() => {

@@ -8,7 +8,8 @@ import {
   basicImage,
   supabase,
   useUser,
-  useToast
+  useToast,
+  shortUrl
 } from 'services'
 import {
   ReSEO,
@@ -187,7 +188,7 @@ const HomePage = () => {
     }
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
-    query['i'] = imageUrls
+    query['i'] = insert.data.map((item) => shortUrl(item.short_id))
     const newURL = queryString.stringify(query, { encode: false })
     setState({
       isUploading: false,
@@ -210,10 +211,11 @@ const HomePage = () => {
     })
   }
   const onSelectImage = (selectedImages: string[]) => {
+    console.log('selectedImages', selectedImages)
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
     if (query['i']) delete query['i']
-    query['i'] = selectedImages
+    query['i'] = selectedImages.map((id) => shortUrl(id))
     const newURL = queryString.stringify(query, { encode: false })
     setState({
       isUploading: false,

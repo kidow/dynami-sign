@@ -11,3 +11,4 @@ export const basicImage =
   'https://raw.githubusercontent.com/kidow/dynami-sign/cb400c00901b54c282a9a1dd66b89aa87c5c3680/public/media/logo-initial.svg'
 
 export const errorTemplate = ``
+export const shortUrl = (id: string) => `${baseURL}/api/short?id=${id}`
