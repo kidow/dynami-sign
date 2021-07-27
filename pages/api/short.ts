@@ -22,7 +22,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     })
     const buffer = Buffer.from(response.data, 'utf-8')
     res.statusCode = 200
-    res.setHeader('Content-Type', 'image/png')
     res.setHeader(
       'Cache-Control',
       'public, immutable, no-transform, s-maxage=31536000, max-age=31536000'
