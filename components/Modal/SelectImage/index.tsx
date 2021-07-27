@@ -93,7 +93,7 @@ const ReChooseImageModal: FunctionComponent<Props> = ({
             <div key={key} className="relative w-1/6 px-1 pb-1">
               <img
                 src={item.image_url}
-                className="w-full cursor-pointer"
+                className="w-full cursor-pointer max-h-16"
                 onClick={() => selectMyImage(item)}
               />
               {item.selected && (
@@ -113,7 +113,7 @@ const ReChooseImageModal: FunctionComponent<Props> = ({
           <div key={key} className="relative w-1/6 px-1 pb-1">
             <img
               src={item.image_url}
-              className="w-full cursor-pointer"
+              className="w-full cursor-pointer max-h-16"
               onClick={() => selectImage(key)}
             />
             {item.selected && (
