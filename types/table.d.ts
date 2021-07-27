@@ -3,4 +3,5 @@ export interface TUpload {
   email: string
   file_name: string
   image_url: string
+  selected?: boolean
 }

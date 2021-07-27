@@ -41,11 +41,21 @@ const ReChooseImageModal: FunctionComponent<Props> = ({
     if (images.filter((item) => item.selected).length === 3) {
       return
     }
+    updateImage(index)
+  }
+  const selectMyImage = (item: TUpload) => {
+    const index = images.findIndex(
+      (image) => image.image_url === item.image_url
+    )
+    updateImage(index)
+  }
+  const updateImage = (index: number) => {
     setImage([
       ...images.slice(0, index),
       { ...images[index], selected: !images[index].selected },
       ...images.slice(index + 1)
     ])
+
     const result = selectedImages
     const i = selectedImages.findIndex((url) => url === images[index].image_url)
     if (i !== -1) result.splice(i, 1)
@@ -84,7 +94,7 @@ const ReChooseImageModal: FunctionComponent<Props> = ({
               <img
                 src={item.image_url}
                 className="w-full cursor-pointer"
-                onClick={() => selectImage(key)}
+                onClick={() => selectMyImage(item)}
               />
               {item.selected && (
                 <span className="absolute top-0 right-0 z-10">

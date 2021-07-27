@@ -206,6 +206,7 @@ const HomePage = () => {
   const onSelectImage = (selectedImages: string[]) => {
     const url = new URL(thumbnail).search
     const query = queryString.parse(url)
+    if (query['i']) delete query['i']
     query['i'] = selectedImages
     const newURL = queryString.stringify(query, { encode: false })
     setState({

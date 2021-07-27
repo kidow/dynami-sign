@@ -8,9 +8,7 @@ export const authState = atom<User | null>({
   dangerouslyAllowMutability: true
 })
 
-export const imageState = atom<
-  Array<Pick<TUpload, 'image_url' | 'user_id'> & { selected: boolean }>
->({
+export const imageState = atom<Array<TUpload>>({
   key: 'imageState',
   default: []
 })
