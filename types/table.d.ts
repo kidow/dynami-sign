@@ -4,4 +4,5 @@ export interface TUpload {
   file_name: string
   image_url: string
   selected?: boolean
+  short_id: string
 }

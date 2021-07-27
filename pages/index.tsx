@@ -28,6 +28,7 @@ import { IItem, TUpload } from 'types'
 import Link from 'next/link'
 import { imageState } from 'store'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
+import shortid from 'shortid'
 
 interface State {
   t: string
@@ -176,7 +177,8 @@ const HomePage = () => {
         user_id: user!.id,
         email: user!.email,
         file_name: uploadFiles[i].name,
-        image_url: imageUrls[i]
+        image_url: imageUrls[i],
+        short_id: shortid.generate()
       }))
     )
     if (insert.error) {
