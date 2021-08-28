@@ -86,24 +86,26 @@ const ReChooseImageModal: FunctionComponent<Props> = ({
           </button>
         )}
       </div>
-      <div className="flex flex-wrap">
-        {images
-          .filter((item) => item.user_id === user!.id)
-          .map((item, key) => (
-            <div key={key} className="relative w-1/6 px-1 pb-1">
-              <img
-                src={item.image_url}
-                className="w-full cursor-pointer max-h-16"
-                onClick={() => selectMyImage(item)}
-              />
-              {item.selected && (
-                <span className="absolute top-0 right-0 z-10">
-                  <CheckCircleIcon className="w-6 h-6 text-blue-600" />
-                </span>
-              )}
-            </div>
-          ))}
-      </div>
+      {!!user && (
+        <div className="flex flex-wrap">
+          {images
+            .filter((item) => item.user_id === user.id)
+            .map((item, key) => (
+              <div key={key} className="relative w-1/6 px-1 pb-1">
+                <img
+                  src={item.image_url}
+                  className="w-full cursor-pointer max-h-16"
+                  onClick={() => selectMyImage(item)}
+                />
+                {item.selected && (
+                  <span className="absolute top-0 right-0 z-10">
+                    <CheckCircleIcon className="w-6 h-6 text-blue-600" />
+                  </span>
+                )}
+              </div>
+            ))}
+        </div>
+      )}
       <div className="my-5 border-t border-gray-200" />
       <span className="text-gray-900 font-bold inline-block text-lg mb-1">
         모든 이미지

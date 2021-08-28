@@ -238,6 +238,9 @@ const HomePage = () => {
           onLoad={() => setState({ isUpdating: false, isLoading: false })}
           isUpdating={isUpdating}
         />
+        <div className="text-center text-sm">
+          이미지를 클릭해서 주소를 복사하세요.
+        </div>
         <div>
           <ReInput
             className="w-full"
